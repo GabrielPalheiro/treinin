@@ -1,0 +1,30 @@
+# Dependências
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Build e testes
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Ambiente — nunca commitar
+.env
+.env.local
+.env.*.local
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# Vercel
+.vercel/
+
+# Sistema
+Thumbs.db
+*.log
