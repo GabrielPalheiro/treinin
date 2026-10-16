@@ -184,8 +184,8 @@ Set-Location ..
 
 ## 9. Estado atual
 
-**Fatia atual: 0 — Fundação.** Código da fatia pronto na branch `chore/fundacao`; faltam
-Supabase de produção, Vercel, merge e instalação no celular.
+**Fatia atual: 1 — Ficha.** A Fatia 0 está concluída: publicada na Vercel, Supabase de produção
+`TreinIn` em `sa-east-1` (ligado via `supabase link`), app instalado no celular.
 
 Notas do que já existe:
 - Next.js 16: `cacheComponents` ligado. Ler cookies, sessão ou relógio só dentro de `<Suspense>`

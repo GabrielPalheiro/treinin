@@ -22,19 +22,19 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 - [x] Repositório `treinin` criado; `web/` com Next.js, TypeScript `strict`, Tailwind e shadcn/ui
 - [x] Tokens do design system definidos (claro e escuro) antes do primeiro componente
-- [ ] Supabase local (`supabase start`) e projeto de produção criados
+- [x] Supabase local (`supabase start`) e projeto de produção criados (`sa-east-1`)
 - [x] Primeira migration: nada além do necessário para o login funcionar
       — o login usa só o schema `auth`; nenhuma migration na Fatia 0, a primeira vem na Fatia 1
-- [ ] Cadastro público desligado; usuário do autor criado pelo painel
+- [x] Cadastro público desligado; usuário do autor criado pelo painel
 - [x] Tela `/entrar` e proxy (`src/proxy.ts`, o antigo middleware) protegendo as rotas do app
 - [x] Shell do app: navegação inferior com **Hoje**, **Treino**, **Dieta**
 - [x] Relógio injetável e função "hoje" em `America/Sao_Paulo`, com teste
 - [x] Lint com `no-restricted-imports` impedindo `domain/` de importar o resto
 - [x] Web App Manifest e ícones: instalável na tela inicial
-- [ ] CI no PR: lint, typecheck, Vitest, build
-- [ ] Deploy na Vercel conectado à `main`; preview por PR
+- [x] CI no PR: lint, typecheck, Vitest, build
+- [x] Deploy na Vercel conectado à `main`; preview por PR
 
-**Pronto quando:** o app está instalado no seu celular e pede login.
+**Pronto quando:** o app está instalado no seu celular e pede login. ✅ Concluída em 16/10/2026.
 
 ---
 
