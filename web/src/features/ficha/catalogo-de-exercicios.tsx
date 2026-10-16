@@ -33,7 +33,7 @@ export function CatalogoDeExercicios({ exercicios }: { exercicios: Exercise[] })
   const criar = handleSubmit(async (dados) => {
     if (!podeCriar) return;
     const resultado = await criarExercicio(dados);
-    if (resultado) {
+    if ("erro" in resultado) {
       setError("name", { message: resultado.erro });
       return;
     }
