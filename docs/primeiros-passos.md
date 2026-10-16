@@ -496,9 +496,11 @@ supabase link --project-ref <ref-da-fase-6.4>
 
 A senha do banco (Fase 6.1) é pedida aqui.
 
-**d) Criar o seu usuário no banco local** — para conseguir logar enquanto desenvolve:
-abra o painel local (o endereço do **Studio** aparece no `supabase status`, normalmente
-`http://127.0.0.1:54323`) → *Authentication → Add user*, com **Auto Confirm**.
+**d) Usuário no banco local** — o `supabase/seed.sql` já cria um usuário de desenvolvimento a
+cada `supabase db reset`: **`dev@treinin.local`**, senha **`treinin-dev`**. Ele existe só no banco
+local; o `supabase db push` não aplica seed em produção.
+
+> Usuário criado à mão no Studio (`http://127.0.0.1:54323`) some no próximo `supabase db reset`.
 
 **e) Aplicar as migrations em produção** — quando o Claude Code avisar que a primeira está
 pronta:

@@ -156,7 +156,7 @@ chore(db): adicionar migration de set_logs com rls
 ```powershell
 # Banco local (Docker Desktop aberto)
 supabase start
-supabase db reset          # reaplica migrations e seed (apaga os usuários locais)
+supabase db reset          # reaplica migrations e seed; recria dev@treinin.local / treinin-dev
 supabase test db           # testes pgTAP de RLS em supabase/tests
 supabase migration new nome_da_mudanca
 supabase stop
