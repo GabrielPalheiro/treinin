@@ -6,7 +6,7 @@
 | **Ambiente** | Produção (Vercel + Supabase) |
 | **Fatia** | 0 — Fundação |
 | **Impacto** | O autor não conseguia entrar no app publicado |
-| **Status** | Corrigido. Melhoria no código pendente (ver abaixo) |
+| **Status** | Corrigido. Melhoria no código feita em `fix/auth-mensagem-de-erro` |
 
 ## Sintoma
 
@@ -51,11 +51,16 @@ Feita pelo autor no painel:
 - Login pelo celular no app publicado funcionando
 - `/auth/v1/settings` do projeto novo: `email = true`, `disable_signup = true`
 
-## Pendente
+## Melhoria no código (`fix/auth-mensagem-de-erro`)
 
-**`fix/auth-mensagem-de-erro`**: gravar no log do servidor o `code` real do erro do Supabase
-(aparece nos logs da Vercel) e mostrar uma mensagem própria para `email_not_confirmed`.
-A mensagem para credenciais inválidas continua genérica, de propósito.
+- A action `entrar` grava no log do servidor o `code` e o `status` do erro, sem e-mail nem senha.
+  O registro aparece nos logs da Vercel como `[auth] login recusado`.
+- `mensagemDeErroDoLogin(code)` (`web/src/features/auth/mensagem-de-erro.ts`, com teste) mostra:
+  - `invalid_credentials` → "E-mail ou senha incorretos." Continua genérica, de propósito.
+  - `email_not_confirmed` → pede para confirmar o usuário no painel
+  - `over_request_rate_limit` → pede para aguardar
+  - qualquer outro → "Não foi possível entrar agora."
+- Códigos conferidos contra o Supabase local com um usuário não confirmado.
 
 ## Para não repetir
 

@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 import { credenciaisSchema, type Credenciais } from "./credenciais";
+import { mensagemDeErroDoLogin } from "./mensagem-de-erro";
 
 export type ResultadoEntrar = { erro: string } | undefined;
 
@@ -18,7 +19,9 @@ export async function entrar(dados: Credenciais): Promise<ResultadoEntrar> {
     password: credenciais.data.senha,
   });
   if (error) {
-    return { erro: "E-mail ou senha incorretos." };
+    // Vai para os logs da Vercel; sem e-mail nem senha.
+    console.error("[auth] login recusado", { code: error.code, status: error.status });
+    return { erro: mensagemDeErroDoLogin(error.code) };
   }
 
   redirect("/hoje");
