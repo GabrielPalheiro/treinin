@@ -5,25 +5,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "cn";
 
-type Destino = { href: string; rotulo: string; Icone: LucideIcon };
+type Destino = { href: string; rotulo: string; Icone: LucideIcon; secoes: string[] };
 
 const DESTINOS: Destino[] = [
-  { href: "/hoje", rotulo: "Hoje", Icone: House },
-  { href: "/treino", rotulo: "Treino", Icone: Dumbbell },
-  { href: "/dieta", rotulo: "Dieta", Icone: Utensils },
+  { href: "/hoje", rotulo: "Hoje", Icone: House, secoes: ["/hoje"] },
+  { href: "/treino", rotulo: "Treino", Icone: Dumbbell, secoes: ["/treino", "/ficha"] },
+  { href: "/dieta", rotulo: "Dieta", Icone: Utensils, secoes: ["/dieta"] },
 ];
 
-export function NavegacaoInferior() {
-  const caminho = usePathname();
+function pertence(caminho: string, secao: string) {
+  return caminho === secao || caminho.startsWith(`${secao}/`);
+}
 
+/** Lê a URL, então precisa estar dentro de <Suspense> (cacheComponents). */
+export function NavegacaoInferior() {
+  return <BarraDeNavegacao caminho={usePathname()} />;
+}
+
+/** Sem hooks: também serve de fallback enquanto a URL não é lida. */
+export function BarraDeNavegacao({ caminho }: { caminho: string | null }) {
   return (
     <nav
       aria-label="Principal"
       className="fixed inset-x-0 bottom-0 z-10 border-t bg-background/95 pb-seguro backdrop-blur"
     >
       <ul className="mx-auto grid h-nav max-w-app grid-cols-3">
-        {DESTINOS.map(({ href, rotulo, Icone }) => {
-          const ativo = caminho === href || caminho.startsWith(`${href}/`);
+        {DESTINOS.map(({ href, rotulo, Icone, secoes }) => {
+          const ativo = caminho !== null && secoes.some((secao) => pertence(caminho, secao));
           return (
             <li key={href}>
               <Link

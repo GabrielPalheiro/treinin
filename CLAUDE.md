@@ -193,6 +193,10 @@ Notas do que já existe:
 - Next.js 16: `cacheComponents` ligado. Ler cookies, sessão ou relógio só dentro de `<Suspense>`
   (com `await connection()` quando não há outra leitura de requisição). Antes de usar uma API do
   Next, consulte `web/node_modules/next/dist/docs/` — ver `web/AGENTS.md`.
+  O mesmo vale para `usePathname()`/`useSearchParams()` e para ler `params` em rota dinâmica.
+- Server Component só passa dado serializável a Client Component: nada de schema Zod ou classe
+  como prop (passe um nome e escolha o schema no cliente)
+- `notFound()` dentro de `<Suspense>` responde 200 com a tela de "Não encontrado" (streaming)
 - O antigo `middleware` agora é `web/src/proxy.ts`
 - Supabase: `@/lib/supabase/servidor` (Server Components e Actions) e `sessao-no-proxy`
 - Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`

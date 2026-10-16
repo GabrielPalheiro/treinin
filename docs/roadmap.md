@@ -41,13 +41,13 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 ## Fatia 1 — Ficha · ~2 sessões
 **Entregável: a ficha atual do treinador está dentro do app**
 
-- [ ] Migrations: `exercises`, `workout_plans`, `workout_templates`, `planned_exercises`, com RLS
-- [ ] Teste de RLS com dois usuários no banco local
-- [ ] Tipos gerados com `supabase gen types`
+- [x] Migrations: `exercises`, `workout_plans`, `workout_templates`, `planned_exercises`, com RLS
+- [x] Teste de RLS com dois usuários no banco local
+- [x] Tipos gerados com `supabase gen types`
 - [x] Catálogo de exercícios: criar, renomear, buscar (nome único por usuário)
-- [ ] Ficha: criar, nomear, ativar (só uma ativa) e arquivar
-- [ ] Treinos da ficha: criar, ordenar (rotação), prescrever exercícios com séries, faixa de reps e técnica
-- [ ] Reordenar exercícios dentro do treino
+- [x] Ficha: criar, nomear, ativar (só uma ativa) e arquivar
+- [x] Treinos da ficha: criar, ordenar (rotação), prescrever exercícios com séries, faixa de reps e técnica
+- [x] Reordenar exercícios dentro do treino
 - [ ] E2E: montar um treino com três exercícios
 
 **Pronto quando:** sua ficha atual (Lower A, Upper A, Lower B, Upper B) está cadastrada.
