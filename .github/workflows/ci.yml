@@ -41,3 +41,17 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+
+  banco:
+    name: banco (migrations e RLS)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 2.121.0
+
+      # Só o Postgres: aplica as migrations e o seed do zero.
+      - run: supabase db start
+      - run: supabase test db
