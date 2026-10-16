@@ -181,6 +181,7 @@ Set-Location ..
 | O que fazer agora | `docs/roadmap.md` |
 | Como nomear as coisas | `docs/dominio.md` |
 | Setup do zero: ferramentas, Supabase, Vercel, GitHub | `docs/primeiros-passos.md` |
+| Erros que já aconteceram e como foram corrigidos | `docs/incidentes/` |
 
 ## 9. Estado atual
 

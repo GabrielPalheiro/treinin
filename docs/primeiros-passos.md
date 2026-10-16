@@ -641,6 +641,7 @@ supabase db push
 | Login local dá "Email logins are disabled" | `enable_signup = false` em `[auth.email]` do `supabase/config.toml` | Deixar `true` ali; quem bloqueia cadastro é o `enable_signup` de `[auth]`. Depois `supabase stop` e `supabase start` |
 | Login local dá "Invalid login credentials" | Usuário existe só em produção, não no banco local | Criar o usuário no Studio local (Fase 9.2 d) |
 | Login dá "Invalid login credentials" com a senha certa | Usuário não confirmado | Recriar com **Auto Confirm User** marcado |
+| Produção funciona, preview de PR falha com "Faltam NEXT_PUBLIC_SUPABASE_URL…" | Variáveis cadastradas só em *Production* | Marcar também *Preview* e *Development* nas duas variáveis e refazer o deploy (incidente 003) |
 | Funciona local, falha na Vercel | Variáveis não cadastradas, ou Root Directory errado | Conferir as duas `NEXT_PUBLIC_*` e Root Directory = `web`; refazer o deploy |
 | Produção dá erro de tabela inexistente | PR mesclado antes do `supabase db push` | Rodar `supabase db push` |
 | Build lento demais | Defender escaneando ou OneDrive sincronizando | Fase 1.3 e sair de `Documentos` |
