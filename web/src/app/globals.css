@@ -51,6 +51,16 @@
   --container-app: 32rem;
 }
 
+/* Área segura do aparelho (barra de gestos do iPhone). Requer viewport-fit=cover. */
+@utility pb-seguro {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Espaço para o conteúdo não ficar atrás da navegação inferior. */
+@utility pb-com-nav {
+  padding-bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom));
+}
+
 :root {
   color-scheme: light;
   --radius: 0.75rem;

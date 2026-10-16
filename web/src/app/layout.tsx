@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CORES_DO_TEMA } from "./cores-do-tema";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,6 +16,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "TreinIn",
   description: "Caderno de treino e dieta",
+  applicationName: "TreinIn",
+  appleWebApp: { capable: true, title: "TreinIn", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: CORES_DO_TEMA.claro },
+    { media: "(prefers-color-scheme: dark)", color: CORES_DO_TEMA.escuro },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
