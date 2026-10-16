@@ -1,0 +1,2 @@
+-- Seed do banco local, aplicado no `supabase db reset`.
+-- Vazio na Fatia 0. A TACO entra na Fatia 3.

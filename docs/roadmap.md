@@ -20,16 +20,17 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 ## Fatia 0 — Fundação · ~2 sessões
 **Entregável: abrir o link no celular, entrar com usuário e senha, ver a tela inicial**
 
-- [ ] Repositório `treinin` criado; `web/` com Next.js, TypeScript `strict`, Tailwind e shadcn/ui
-- [ ] Tokens do design system definidos (claro e escuro) antes do primeiro componente
+- [x] Repositório `treinin` criado; `web/` com Next.js, TypeScript `strict`, Tailwind e shadcn/ui
+- [x] Tokens do design system definidos (claro e escuro) antes do primeiro componente
 - [ ] Supabase local (`supabase start`) e projeto de produção criados
-- [ ] Primeira migration: nada além do necessário para o login funcionar
+- [x] Primeira migration: nada além do necessário para o login funcionar
+      — o login usa só o schema `auth`; nenhuma migration na Fatia 0, a primeira vem na Fatia 1
 - [ ] Cadastro público desligado; usuário do autor criado pelo painel
-- [ ] Tela `/entrar` e middleware protegendo as rotas do app
-- [ ] Shell do app: navegação inferior com **Hoje**, **Treino**, **Dieta**
-- [ ] Relógio injetável e função "hoje" em `America/Sao_Paulo`, com teste
-- [ ] Lint com `no-restricted-imports` impedindo `domain/` de importar o resto
-- [ ] Web App Manifest e ícones: instalável na tela inicial
+- [x] Tela `/entrar` e proxy (`src/proxy.ts`, o antigo middleware) protegendo as rotas do app
+- [x] Shell do app: navegação inferior com **Hoje**, **Treino**, **Dieta**
+- [x] Relógio injetável e função "hoje" em `America/Sao_Paulo`, com teste
+- [x] Lint com `no-restricted-imports` impedindo `domain/` de importar o resto
+- [x] Web App Manifest e ícones: instalável na tela inicial
 - [ ] CI no PR: lint, typecheck, Vitest, build
 - [ ] Deploy na Vercel conectado à `main`; preview por PR
 

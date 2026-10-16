@@ -477,7 +477,8 @@ O Claude Code cria o código. Autenticação e segredos são **seus** — ele va
 Demora alguns minutos na primeira vez (baixa as imagens). Ao terminar, imprime a **URL local**
 e as **chaves locais**. Você também vê isso a qualquer momento com `supabase status`.
 
-**b) Criar `web\.env.local`** com os valores **locais** do passo anterior:
+**b) Criar `web\.env.local`** a partir do modelo (`Copy-Item web\.env.example web\.env.local`) e
+preencher com os valores **locais** do passo anterior (no `supabase status`, a `Publishable key`):
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
@@ -637,6 +638,7 @@ supabase db push
 | Docker não sobe | Virtualização desligada na BIOS | Ativar *Intel VT-x* / *AMD-V* |
 | `supabase start` falha com erro de Docker | Docker Desktop fechado | Abrir o Docker Desktop e esperar ficar pronto |
 | `supabase start` reclama de porta em uso | Outro Postgres ou container usando as portas | Parar o outro container no Docker Desktop, ou `supabase stop` e tentar de novo |
+| Login local dá "Email logins are disabled" | `enable_signup = false` em `[auth.email]` do `supabase/config.toml` | Deixar `true` ali; quem bloqueia cadastro é o `enable_signup` de `[auth]`. Depois `supabase stop` e `supabase start` |
 | Login local dá "Invalid login credentials" | Usuário existe só em produção, não no banco local | Criar o usuário no Studio local (Fase 9.2 d) |
 | Login dá "Invalid login credentials" com a senha certa | Usuário não confirmado | Recriar com **Auto Confirm User** marcado |
 | Funciona local, falha na Vercel | Variáveis não cadastradas, ou Root Directory errado | Conferir as duas `NEXT_PUBLIC_*` e Root Directory = `web`; refazer o deploy |

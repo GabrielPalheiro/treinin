@@ -184,4 +184,16 @@ Set-Location ..
 
 ## 9. Estado atual
 
-**Fatia atual: 0 — Fundação.** Nenhum código existe ainda; só a documentação.
+**Fatia atual: 0 — Fundação.** Código da fatia pronto na branch `chore/fundacao`; faltam
+Supabase de produção, Vercel, merge e instalação no celular.
+
+Notas do que já existe:
+- Next.js 16: `cacheComponents` ligado. Ler cookies, sessão ou relógio só dentro de `<Suspense>`
+  (com `await connection()` quando não há outra leitura de requisição). Antes de usar uma API do
+  Next, consulte `web/node_modules/next/dist/docs/` — ver `web/AGENTS.md`.
+- O antigo `middleware` agora é `web/src/proxy.ts`
+- Supabase: `@/lib/supabase/servidor` (Server Components e Actions) e `sessao-no-proxy`
+- Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`
+- Tokens: `web/src/app/globals.css`; espelho em hex para manifest e ícones em `cores-do-tema.ts`.
+  Alvo de toque: `h-toque` / `size-toque`
+- `cn` vem do pacote `cn` (oficial do shadcn), não de um arquivo `utils`
