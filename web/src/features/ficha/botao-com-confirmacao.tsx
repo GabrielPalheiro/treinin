@@ -2,7 +2,7 @@
 
 import { useState, useTransition, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import type { ResultadoDaAcao } from "./resultado";
+import type { ResultadoDaAcao } from "@/lib/resultado-da-acao";
 
 type Props = {
   children: ReactNode;

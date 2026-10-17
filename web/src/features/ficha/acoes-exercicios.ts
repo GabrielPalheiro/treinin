@@ -9,7 +9,7 @@ import {
   type NomeDoExercicio,
   type RenomearExercicio,
 } from "./exercicio-schema";
-import { mensagemDeErro, primeiroErro, type ResultadoComId, type ResultadoDaAcao } from "./resultado";
+import { mensagemDeErro, primeiroErro, type ResultadoComId, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
 
 const NOME_REPETIDO = { "23505": "Já existe um exercício com esse nome." };
 

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { nomeDaFichaSchema, nomeDoTreinoSchema, type Nome } from "./ficha-schema";
-import type { ResultadoDaAcao } from "./resultado";
+import type { ResultadoDaAcao } from "@/lib/resultado-da-acao";
 
 // Por nome, e não o schema em si: Server Components só passam dados serializáveis.
 const SCHEMAS = { ficha: nomeDaFichaSchema, treino: nomeDoTreinoSchema } as const;

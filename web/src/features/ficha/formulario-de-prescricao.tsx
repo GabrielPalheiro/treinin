@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { prescricaoSchema, type Prescricao, type PrescricaoEntrada } from "./ficha-schema";
-import type { ResultadoDaAcao } from "./resultado";
+import type { ResultadoDaAcao } from "@/lib/resultado-da-acao";
 
 type Props = {
   valoresIniciais: PrescricaoEntrada;
