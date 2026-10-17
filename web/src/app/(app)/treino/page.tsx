@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { buscarFichaAtiva } from "@/features/ficha/consultas";
+import { buscarSessaoAberta } from "@/features/treino/consultas";
 
 export const metadata: Metadata = {
   title: "Treino · TreinIn",
@@ -13,6 +14,9 @@ export default function PaginaTreino() {
   return (
     <main className="flex flex-col gap-6">
       <h1 className="text-3xl font-bold tracking-tight">Treino</h1>
+      <Suspense fallback={null}>
+        <SessaoEmAndamento />
+      </Suspense>
       <Suspense fallback={<p className="text-muted-foreground">Carregando…</p>}>
         <FichaAtiva />
       </Suspense>
@@ -25,6 +29,16 @@ export default function PaginaTreino() {
         </LinkDeCadastro>
       </nav>
     </main>
+  );
+}
+
+async function SessaoEmAndamento() {
+  const aberta = await buscarSessaoAberta();
+  if (!aberta) return null;
+  return (
+    <Button asChild size="lg">
+      <Link href={`/treino/sessao/${aberta.id}`}>Continuar {aberta.nomeDoTreino ?? "treino"}</Link>
+    </Button>
   );
 }
 

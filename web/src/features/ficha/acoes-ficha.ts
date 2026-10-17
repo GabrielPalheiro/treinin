@@ -15,7 +15,7 @@ import {
   type Nome,
   type Prescricao,
 } from "./ficha-schema";
-import { mensagemDeErro, primeiroErro, type ResultadoDaAcao } from "./resultado";
+import { mensagemDeErro, primeiroErro, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
 
 const NOME_DE_TREINO_REPETIDO = { "23505": "Já existe um treino com esse nome nesta ficha." };
 
