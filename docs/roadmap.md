@@ -48,7 +48,7 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] Ficha: criar, nomear, ativar (só uma ativa) e arquivar
 - [x] Treinos da ficha: criar, ordenar (rotação), prescrever exercícios com séries, faixa de reps e técnica
 - [x] Reordenar exercícios dentro do treino
-- [ ] E2E: montar um treino com três exercícios
+- [x] E2E: montar um treino com três exercícios (`pnpm test:e2e`, só local)
 
 **Pronto quando:** sua ficha atual (Lower A, Upper A, Lower B, Upper B) está cadastrada.
 

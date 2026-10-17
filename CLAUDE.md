@@ -198,7 +198,10 @@ Notas do que já existe:
   como prop (passe um nome e escolha o schema no cliente)
 - `notFound()` dentro de `<Suspense>` responde 200 com a tela de "Não encontrado" (streaming)
 - O antigo `middleware` agora é `web/src/proxy.ts`
-- Supabase: `@/lib/supabase/servidor` (Server Components e Actions) e `sessao-no-proxy`
+- Supabase: `criarClienteParaLeitura()` em consultas de Server Components (chama `connection()`;
+  ver incidente 004), `criarClienteServidor()` em Server Actions, e `sessao-no-proxy`
+- E2E: `pnpm test:e2e` com `supabase start` de pé; cria e apaga o usuário `e2e@treinin.local`.
+  Seletor CSS precisa de `.filter({ visible: true })`: rotas visitadas ficam escondidas na página
 - Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`
 - Tokens: `web/src/app/globals.css`; espelho em hex para manifest e ícones em `cores-do-tema.ts`.
   Alvo de toque: `h-toque` / `size-toque`
