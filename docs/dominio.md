@@ -102,6 +102,17 @@ existe estado "pendente". Há no máximo um `ExerciseLog` por exercício prescri
 > **Substituição** não é um estado: é um `ExerciseLog` cujo `exercise_id` difere do exercício do
 > `PlannedExercise`. Ex.: prescrito Legpress 45, feito Agachamento guiado.
 
+Ações no cartão da sessão:
+
+| Ação | Efeito |
+|---|---|
+| **Pulei** | `status = Skipped`, com nota opcional. Só sem séries registradas. "Desfazer" apaga o registro |
+| **Troquei por…** | `exercise_id` passa a ser o exercício escolhido; o prescrito continua visível ("no lugar de…"). As séries já registradas passam a contar para o novo exercício. "Voltar ao prescrito" desfaz |
+| **Nota** | Texto livre no `ExerciseLog` ("pegada neutra"). Cria o registro se ainda não existir |
+| **Fora da ficha** | Um `ExerciseLog` sem `planned_exercise_id`, no fim da sessão. Pode ser removido da sessão |
+
+Um registro sem séries (só troca ou nota) não conta como "última vez".
+
 ### SetLog — Série
 Uma série de trabalho registrada.
 

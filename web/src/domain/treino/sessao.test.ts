@@ -2,9 +2,12 @@ import { describe, expect, it } from "vitest";
 import {
   formatarCarga,
   formatarSeries,
+  foiSubstituido,
   haQuantoTempo,
   lerDecimal,
+  podePular,
   preencherSerie,
+  situacaoDoExercicio,
   sugerirProximoTreino,
   ultimaVez,
   type ExecucaoAnterior,
@@ -101,6 +104,38 @@ describe("preencherSerie", () => {
     ["peso corporal é copiado sem carga", [corporal(15)], [], corporal(15)],
   ])("%s", (_caso, ultimaVezSeries, deHoje, esperado) => {
     expect(preencherSerie(ultimaVezSeries, deHoje)).toEqual(esperado);
+  });
+});
+
+describe("situacaoDoExercicio", () => {
+  it.each([
+    ["sem registro", null, "Pendente"],
+    ["registro sem série (só troca ou nota)", { status: "Done", series: [] }, "Pendente"],
+    ["com série", { status: "Done", series: [kg(60, 10)] }, "Feito"],
+    ["pulado", { status: "Skipped", series: [] }, "Pulado"],
+  ] as const)("%s → %s", (_caso, registro, esperado) => {
+    expect(situacaoDoExercicio(registro)).toBe(esperado);
+  });
+});
+
+describe("podePular", () => {
+  it.each([
+    ["sem registro", null, true],
+    ["registro sem série", { status: "Done", series: [] }, true],
+    ["já tem série", { status: "Done", series: [kg(60, 10)] }, false],
+    ["já pulado", { status: "Skipped", series: [] }, false],
+  ] as const)("%s → %s", (_caso, registro, esperado) => {
+    expect(podePular(registro)).toBe(esperado);
+  });
+});
+
+describe("foiSubstituido", () => {
+  it.each([
+    ["feito o prescrito", "legpress", "legpress", false],
+    ["feito outro no lugar", "legpress", "agachamento", true],
+    ["fora da ficha não é troca", null, "agachamento", false],
+  ])("%s → %s", (_caso, prescrito, feito, esperado) => {
+    expect(foiSubstituido(prescrito, feito)).toBe(esperado);
   });
 });
 

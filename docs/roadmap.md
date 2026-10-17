@@ -64,11 +64,11 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] Tela da sessão: cartões na ordem da ficha, prescrição e última vez (com "há N dias")
 - [x] "+ Série" pré-preenchida; editar e remover série no próprio cartão
 - [x] `LoadUnit`: kg, placas, peso corporal
-- [ ] "Pulei" com nota; "Troquei por…" escolhendo outro exercício do catálogo
-- [ ] Adicionar exercício fora da ficha na sessão
+- [x] "Pulei" com nota; "Troquei por…" escolhendo outro exercício do catálogo
+- [x] Adicionar exercício fora da ficha na sessão
 - [x] Observação da sessão e "Finalizar"
 - [x] Retomar uma sessão do dia que não foi finalizada
-- [ ] E2E: sessão completa com substituição e exercício pulado
+- [x] E2E: sessão completa com substituição e exercício pulado
 - [ ] **Teste de campo:** usar numa sessão real e corrigir o que atrapalhou
 
 **Pronto quando:** você treina uma semana inteira registrando só no TreinIn.

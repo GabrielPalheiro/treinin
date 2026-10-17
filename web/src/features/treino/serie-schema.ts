@@ -64,3 +64,15 @@ export const observacaoSchema = z.object({
 });
 
 export type Observacao = z.input<typeof observacaoSchema>;
+
+
+export const notaDoExercicioSchema = z.object({
+  note: z
+    .string()
+    .trim()
+    .max(500, "Use até 500 caracteres")
+    .nullish()
+    .transform((nota) => nota || null),
+});
+
+export type NotaDoExercicio = z.input<typeof notaDoExercicioSchema>;
