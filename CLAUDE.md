@@ -201,6 +201,8 @@ Notas do que já existe:
 - O antigo `middleware` agora é `web/src/proxy.ts`
 - Supabase: `criarClienteParaLeitura()` em consultas de Server Components (chama `connection()`;
   ver incidente 004), `criarClienteServidor()` em Server Actions, e `sessao-no-proxy`
+- Testes de `features/` no Vitest usam o alias `@/` (configurado no `vitest.config.ts`)
+- Retorno de Server Action e tradução de erro do banco: `@/lib/resultado-da-acao`
 - E2E: `pnpm test:e2e` com `supabase start` de pé; cria e apaga o usuário `e2e@treinin.local`.
   Seletor CSS precisa de `.filter({ visible: true })`: rotas visitadas ficam escondidas na página
 - Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`

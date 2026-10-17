@@ -57,17 +57,17 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 ## Fatia 2 — Sessão de treino · ~4 sessões
 **Entregável: a planilha é aposentada**
 
-- [ ] Migrations: `workout_sessions`, `exercise_logs`, `set_logs`, com RLS
-- [ ] `domain/treino` por TDD, com tabela de casos:
+- [x] Migrations: `workout_sessions`, `exercise_logs`, `set_logs`, com RLS
+- [x] `domain/treino` por TDD, com tabela de casos:
       `sugerirProximoTreino`, `ultimaVez` (por exercício, só `Done`), `preencherSerie`
-- [ ] Tela **Hoje**: sugestão do próximo treino e "Começar"
-- [ ] Tela da sessão: cartões na ordem da ficha, prescrição e última vez (com "há N dias")
-- [ ] "+ Série" pré-preenchida; editar e remover série no próprio cartão
-- [ ] `LoadUnit`: kg, placas, peso corporal
+- [x] Tela **Hoje**: sugestão do próximo treino e "Começar"
+- [x] Tela da sessão: cartões na ordem da ficha, prescrição e última vez (com "há N dias")
+- [x] "+ Série" pré-preenchida; editar e remover série no próprio cartão
+- [x] `LoadUnit`: kg, placas, peso corporal
 - [ ] "Pulei" com nota; "Troquei por…" escolhendo outro exercício do catálogo
 - [ ] Adicionar exercício fora da ficha na sessão
-- [ ] Observação da sessão e "Finalizar"
-- [ ] Retomar uma sessão do dia que não foi finalizada
+- [x] Observação da sessão e "Finalizar"
+- [x] Retomar uma sessão do dia que não foi finalizada
 - [ ] E2E: sessão completa com substituição e exercício pulado
 - [ ] **Teste de campo:** usar numa sessão real e corrigir o que atrapalhou
 

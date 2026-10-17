@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { hoje } from "@/domain/tempo/hoje";
 import { BotaoSair } from "@/features/auth/botao-sair";
+import { PainelDeHoje } from "@/features/treino/painel-de-hoje";
 import { formatarDataLonga } from "@/lib/formatar-data";
 import { relogioDoSistema } from "@/lib/relogio";
 
@@ -22,9 +23,9 @@ export default function PaginaHoje() {
         </div>
         <BotaoSair />
       </header>
-      <p className="text-muted-foreground">
-        O treino sugerido e as calorias do dia aparecem aqui nas próximas fatias.
-      </p>
+      <Suspense fallback={<p className="text-muted-foreground">Carregando…</p>}>
+        <PainelDeHoje />
+      </Suspense>
     </main>
   );
 }
