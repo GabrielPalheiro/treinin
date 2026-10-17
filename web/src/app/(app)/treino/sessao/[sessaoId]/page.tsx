@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { LinkDeVoltar } from "@/components/link-de-voltar";
+import { listarExercicios } from "@/features/ficha/consultas";
+import { AdicionarForaDaFicha } from "@/features/treino/adicionar-fora-da-ficha";
 import { CartaoDoExercicio } from "@/features/treino/cartao-do-exercicio";
 import { carregarSessao } from "@/features/treino/consultas";
 import { FinalizarSessao } from "@/features/treino/finalizar-sessao";
@@ -26,7 +28,7 @@ export default function PaginaSessao({ params }: Props) {
 
 async function Sessao({ params }: Pick<Props, "params">) {
   const { sessaoId } = await params;
-  const sessao = await carregarSessao(sessaoId);
+  const [sessao, catalogo] = await Promise.all([carregarSessao(sessaoId), listarExercicios()]);
   if (!sessao) notFound();
 
   return (
@@ -44,10 +46,18 @@ async function Sessao({ params }: Pick<Props, "params">) {
       ) : (
         <ol className="flex flex-col gap-4">
           {sessao.cartoes.map((cartao) => (
-            <CartaoDoExercicio key={cartao.chave} cartao={cartao} sessaoId={sessao.id} hoje={sessao.hoje} />
+            <CartaoDoExercicio
+              key={cartao.chave}
+              cartao={cartao}
+              sessaoId={sessao.id}
+              hoje={sessao.hoje}
+              catalogo={catalogo}
+            />
           ))}
         </ol>
       )}
+
+      <AdicionarForaDaFicha sessaoId={sessao.id} catalogo={catalogo} />
 
       {sessao.finalizada ? (
         sessao.note && (
