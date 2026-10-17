@@ -1,11 +1,8 @@
 "use client";
 
-import { Pencil, Plus, Trash2, X } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { buscarExercicios, encontrarPorNome, normalizarNome } from "@/domain/treino/catalogo";
 import { formatarPrescricao, moverItem } from "@/domain/treino/ficha";
 import {
   adicionarExercicioPrescrito,
@@ -15,15 +12,14 @@ import {
   renomearTreino,
   reordenarExerciciosPrescritos,
 } from "./acoes-ficha";
-import { criarExercicio } from "./acoes-exercicios";
 import { BotaoComConfirmacao } from "./botao-com-confirmacao";
 import { BotoesDeOrdem } from "./botoes-de-ordem";
 import type { Exercise, PlannedExercise, TreinoComPrescricao } from "./consultas";
+import { EscolherExercicio } from "./escolher-exercicio";
 import { FormularioDeNome } from "./formulario-de-nome";
 import { FormularioDePrescricao } from "./formulario-de-prescricao";
 
 const PRESCRICAO_PADRAO = { target_sets: 3, rep_min: 8, rep_max: 12, technique: "" };
-const MAXIMO_DE_SUGESTOES = 6;
 
 export function EditorDoTreino({ treino, catalogo }: { treino: TreinoComPrescricao; catalogo: Exercise[] }) {
   const somenteLeitura = Boolean(treino.ficha.archived_at);
@@ -198,33 +194,9 @@ function RemoverPrescrito({ id, nome }: { id: string; nome: string }) {
   );
 }
 
+
 function AdicionarExercicio({ treinoId, catalogo }: { treinoId: string; catalogo: Exercise[] }) {
-  const [termo, setTermo] = useState("");
   const [escolhido, setEscolhido] = useState<Exercise>();
-  const [erro, setErro] = useState<string>();
-  const [criando, iniciar] = useTransition();
-
-  const nomeNovo = normalizarNome(termo);
-  const sugestoes = nomeNovo ? buscarExercicios(catalogo, termo).slice(0, MAXIMO_DE_SUGESTOES) : [];
-  const podeCriar = nomeNovo !== "" && !encontrarPorNome(catalogo, termo);
-
-  const criarEEscolher = () => {
-    setErro(undefined);
-    iniciar(async () => {
-      const resultado = await criarExercicio({ name: nomeNovo });
-      if ("erro" in resultado) {
-        setErro(resultado.erro);
-        return;
-      }
-      setEscolhido({ id: resultado.id, name: nomeNovo });
-    });
-  };
-
-  const recomecar = () => {
-    setEscolhido(undefined);
-    setTermo("");
-    setErro(undefined);
-  };
 
   return (
     <section aria-labelledby="titulo-adicionar" className="flex flex-col gap-3 rounded-lg border border-dashed p-4">
@@ -236,7 +208,7 @@ function AdicionarExercicio({ treinoId, catalogo }: { treinoId: string; catalogo
         <>
           <div className="flex items-center justify-between gap-2">
             <span className="font-medium">{escolhido.name}</span>
-            <Button variant="ghost" onClick={recomecar}>
+            <Button variant="ghost" onClick={() => setEscolhido(undefined)}>
               Trocar
             </Button>
           </div>
@@ -244,56 +216,11 @@ function AdicionarExercicio({ treinoId, catalogo }: { treinoId: string; catalogo
             valoresIniciais={PRESCRICAO_PADRAO}
             textoDoBotao="Adicionar ao treino"
             acao={(dados) => adicionarExercicioPrescrito(treinoId, escolhido.id, dados)}
-            aoSalvar={recomecar}
+            aoSalvar={() => setEscolhido(undefined)}
           />
         </>
       ) : (
-        <>
-          <Label htmlFor="adicionar-busca" className="sr-only">
-            Buscar ou criar exercício
-          </Label>
-          <Input
-            id="adicionar-busca"
-            type="search"
-            autoComplete="off"
-            placeholder="Buscar ou criar exercício"
-            value={termo}
-            onChange={(evento) => setTermo(evento.target.value)}
-          />
-          {(sugestoes.length > 0 || podeCriar) && (
-            <ul className="flex flex-col divide-y rounded-lg border bg-card">
-              {sugestoes.map((exercicio) => (
-                <li key={exercicio.id}>
-                  <button
-                    type="button"
-                    className="flex min-h-toque w-full items-center px-4 text-left hover:bg-accent"
-                    onClick={() => setEscolhido(exercicio)}
-                  >
-                    {exercicio.name}
-                  </button>
-                </li>
-              ))}
-              {podeCriar && (
-                <li>
-                  <button
-                    type="button"
-                    disabled={criando}
-                    className="flex min-h-toque w-full items-center gap-2 px-4 text-left font-medium text-primary hover:bg-accent"
-                    onClick={criarEEscolher}
-                  >
-                    <Plus aria-hidden className="size-4 shrink-0" />
-                    <span className="truncate">Criar “{nomeNovo}” no catálogo</span>
-                  </button>
-                </li>
-              )}
-            </ul>
-          )}
-          {erro && (
-            <p role="alert" className="text-sm text-destructive">
-              {erro}
-            </p>
-          )}
-        </>
+        <EscolherExercicio catalogo={catalogo} aoEscolher={setEscolhido} />
       )}
     </section>
   );

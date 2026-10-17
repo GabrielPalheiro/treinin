@@ -86,6 +86,7 @@ export type CartaoDaSessao = {
   exercise: { id: string; name: string };
   prescrito: {
     id: string;
+    exercise: { id: string; name: string };
     target_sets: number;
     rep_min: number;
     rep_max: number;
@@ -160,6 +161,7 @@ export async function carregarSessao(sessaoId: string): Promise<SessaoDeTreino |
       exercise: registro?.exercises ?? p.exercises,
       prescrito: {
         id: p.id,
+        exercise: p.exercises,
         target_sets: p.target_sets,
         rep_min: p.rep_min,
         rep_max: p.rep_max,
