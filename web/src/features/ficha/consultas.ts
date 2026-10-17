@@ -1,4 +1,4 @@
-import { criarClienteServidor } from "@/lib/supabase/servidor";
+import { criarClienteParaLeitura } from "@/lib/supabase/servidor";
 import type { Tables } from "@/lib/supabase/database.types";
 import { id as idSchema } from "./ficha-schema";
 
@@ -15,7 +15,7 @@ export type PlannedExercise = Pick<
 > & { exercise: Exercise };
 
 export async function listarExercicios(): Promise<Exercise[]> {
-  const supabase = await criarClienteServidor();
+  const supabase = await criarClienteParaLeitura();
   const { data, error } = await supabase.from("exercises").select("id, name");
   if (error) throw error;
   return data;
@@ -23,7 +23,7 @@ export async function listarExercicios(): Promise<Exercise[]> {
 
 /** Ativa primeiro, depois inativas, depois arquivadas; dentro de cada grupo, as mais novas antes. */
 export async function listarFichas(): Promise<WorkoutPlan[]> {
-  const supabase = await criarClienteServidor();
+  const supabase = await criarClienteParaLeitura();
   const { data, error } = await supabase
     .from("workout_plans")
     .select("id, name, active, archived_at")
@@ -40,7 +40,7 @@ export type FichaComTreinos = WorkoutPlan & {
 
 export async function buscarFicha(fichaId: string): Promise<FichaComTreinos | null> {
   if (!idSchema.safeParse(fichaId).success) return null;
-  const supabase = await criarClienteServidor();
+  const supabase = await criarClienteParaLeitura();
   const { data, error } = await supabase
     .from("workout_plans")
     .select("id, name, active, archived_at, workout_templates(id, name, position, planned_exercises(count))")
@@ -52,7 +52,7 @@ export async function buscarFicha(fichaId: string): Promise<FichaComTreinos | nu
 }
 
 export async function buscarFichaAtiva(): Promise<FichaComTreinos | null> {
-  const supabase = await criarClienteServidor();
+  const supabase = await criarClienteParaLeitura();
   const { data, error } = await supabase
     .from("workout_plans")
     .select("id, name, active, archived_at, workout_templates(id, name, position, planned_exercises(count))")
@@ -84,7 +84,7 @@ export type TreinoComPrescricao = WorkoutTemplate & {
 
 export async function buscarTreino(treinoId: string): Promise<TreinoComPrescricao | null> {
   if (!idSchema.safeParse(treinoId).success) return null;
-  const supabase = await criarClienteServidor();
+  const supabase = await criarClienteParaLeitura();
   const { data, error } = await supabase
     .from("workout_templates")
     .select(

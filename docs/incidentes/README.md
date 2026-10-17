@@ -10,6 +10,7 @@ aqui, no mesmo PR da correção. Numeração sequencial, nome curto.
 | [001](001-login-email-desligado-no-supabase-local.md) | 16/10/2026 | Supabase local | Desligar cadastro em `[auth.email]` desligou o login por e-mail | Corrigido |
 | [002](002-login-recusado-em-producao.md) | 16/10/2026 | Supabase produção | Login recusado com a senha certa: dois projetos e usuário não confirmado | Corrigido |
 | [003](003-build-de-preview-sem-variaveis.md) | 16/10/2026 | Vercel | Deploy de preview falhou: variáveis só em Production | Corrigido |
+| [004](004-date-now-no-prefetch-das-rotas-da-ficha.md) | 16/10/2026 | Next.js | `Date.now()` do cliente Supabase no prefetch das rotas | Corrigido |
 
 ## Ajustes menores da Fatia 0
 
@@ -17,5 +18,9 @@ Não viraram incidente, mas ficam anotados:
 
 - **`LayoutProps` não encontrado no `tsc`.** No Next 16 os tipos de rota são gerados.
   O script `typecheck` roda `next typegen` antes do `tsc --noEmit`.
+- **Build da Fatia 1: `usePathname()` fora de `<Suspense>` e schema Zod passado a Client
+  Component.** Corrigidos antes do primeiro push do PR #6 (ver notas no CLAUDE.md).
+- **E2E contou elementos escondidos.** Com `cacheComponents`, rotas já visitadas ficam escondidas
+  na página (`<Activity>`); seletor CSS no Playwright precisa de `.filter({ visible: true })`.
 - **`pnpm db:types` falhou com "caminho não encontrado".** O redirecionamento `>` não cria pasta.
   `web/src/lib/supabase/` agora existe no repositório.
