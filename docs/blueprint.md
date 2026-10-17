@@ -264,7 +264,8 @@ Detalhado em `docs/roadmap.md`.
 
 ## 9. Backlog pós-v1
 
-Macronutrientes (TACO já traz os dados) · Meta diária de kcal · Peso corporal e medidas ·
+Macronutrientes (TACO já traz os dados) · Meta diária de kcal · Treino livre, sem ficha (detalhe
+em `docs/roadmap.md`) · Peso corporal e medidas ·
 Cronômetro de descanso entre séries · Gráficos por exercício · Funcionamento offline na academia
 com sincronização · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários
 

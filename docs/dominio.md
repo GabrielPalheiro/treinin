@@ -83,7 +83,8 @@ sessão avulsa) e tem uma observação livre ("15 min de cardio na esteira").
 A `date` é o "hoje" em `America/Sao_Paulo` no momento de "Começar". Se o treino for apagado da
 ficha, a sessão continua no histórico, sem o vínculo.
 
-> No v1 toda sessão começa de um treino da ficha ativa. Sessão avulsa está no backlog.
+> No v1 toda sessão começa de um treino da ficha ativa. O **treino livre** (sessão sem ficha) está
+> no backlog: é uma `WorkoutSession` com `workout_template_id` nulo, só com exercícios fora da ficha.
 
 ### ExerciseLog — Exercício executado
 O que aconteceu com um exercício dentro de uma sessão.
