@@ -110,7 +110,17 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 ## Backlog — não priorizado
 
-Macronutrientes · Meta diária de kcal · Sessão avulsa (sem treino da ficha) · Peso corporal e medidas · Cronômetro de descanso ·
+Macronutrientes · Meta diária de kcal · Treino livre (ver abaixo) · Peso corporal e medidas · Cronômetro de descanso ·
 Offline na academia · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários
+
+### Treino livre
+Para quem quer registrar o treino sem seguir uma ficha. Começa uma sessão vazia, adiciona os
+exercícios que fizer (do catálogo ou criados na hora) e marca séries, carga e repetições. Tudo fica
+guardado como as outras sessões, para consultar depois: histórico, "última vez" e evolução.
+
+- **Base pronta:** o banco já aceita sessão sem treino da ficha (`workout_template_id` nulo) e
+  registro sem exercício prescrito ("fora da ficha"), então não precisa de migration
+- **Falta:** "Treino livre" na tela Hoje, a tela da sessão sem cartões da ficha e o nome mostrado
+  no lugar do nome do treino
 
 **Regra:** ideia nova entra aqui, nunca na fatia em andamento.
