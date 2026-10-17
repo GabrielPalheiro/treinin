@@ -186,8 +186,9 @@ Set-Location ..
 
 ## 9. Estado atual
 
-**Fatia atual: 1 — Ficha.** A Fatia 0 está concluída: publicada na Vercel, Supabase de produção
-`TreinIn` em `sa-east-1` (ligado via `supabase link`), app instalado no celular.
+**Fatia atual: 2 — Sessão de treino.** Fatias 0 e 1 concluídas: app publicado na Vercel e
+instalado no celular, Supabase de produção `TreinIn` em `sa-east-1` (ligado via `supabase link`),
+ficha atual do autor cadastrada e ativa.
 
 Notas do que já existe:
 - Next.js 16: `cacheComponents` ligado. Ler cookies, sessão ou relógio só dentro de `<Suspense>`
