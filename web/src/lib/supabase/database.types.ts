@@ -5,7 +5,39 @@ export type Database = {
   
   "public": {
           Tables: {
-            "exercises": {
+            "exercise_logs": {
+                  Row: {
+                    "created_at": string,"exercise_id": string,"id": string,"note": string | null,"planned_exercise_id": string | null,"status": Database["public"]['Enums']["exercise_log_status"],"user_id": string,"workout_session_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"exercise_id": string,"id"?: string,"note"?: string | null,"planned_exercise_id"?: string | null,"status"?: Database["public"]['Enums']["exercise_log_status"],"user_id"?: string,"workout_session_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"exercise_id"?: string,"id"?: string,"note"?: string | null,"planned_exercise_id"?: string | null,"status"?: Database["public"]['Enums']["exercise_log_status"],"user_id"?: string,"workout_session_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "exercise_logs_exercise_fkey"
+      columns: ["exercise_id","user_id"]
+isOneToOne: false
+      referencedRelation: "exercises"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "exercise_logs_planned_fkey"
+      columns: ["planned_exercise_id","user_id"]
+isOneToOne: false
+      referencedRelation: "planned_exercises"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "exercise_logs_session_fkey"
+      columns: ["workout_session_id","user_id"]
+isOneToOne: false
+      referencedRelation: "workout_sessions"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"exercises": {
                   Row: {
                     "created_at": string,"id": string,"name": string,"user_id": string
                   }
@@ -45,6 +77,26 @@ isOneToOne: false
       referencedColumns: ["id","user_id"]
     }
                   ]
+                },"set_logs": {
+                  Row: {
+                    "created_at": string,"exercise_log_id": string,"id": string,"load": number | null,"load_unit": Database["public"]['Enums']["load_unit"],"position": number,"reps": number,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"exercise_log_id": string,"id"?: string,"load"?: number | null,"load_unit": Database["public"]['Enums']["load_unit"],"position": number,"reps": number,"user_id"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"exercise_log_id"?: string,"id"?: string,"load"?: number | null,"load_unit"?: Database["public"]['Enums']["load_unit"],"position"?: number,"reps"?: number,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "set_logs_exercise_log_fkey"
+      columns: ["exercise_log_id","user_id"]
+isOneToOne: false
+      referencedRelation: "exercise_logs"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
                 },"workout_plans": {
                   Row: {
                     "active": boolean,"archived_at": string | null,"created_at": string,"id": string,"name": string,"user_id": string
@@ -58,6 +110,26 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"workout_sessions": {
+                  Row: {
+                    "created_at": string,"date": string,"finished_at": string | null,"id": string,"note": string | null,"user_id": string,"workout_template_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"date": string,"finished_at"?: string | null,"id"?: string,"note"?: string | null,"user_id"?: string,"workout_template_id"?: string | null
+                  }
+                  Update: {
+                    "created_at"?: string,"date"?: string,"finished_at"?: string | null,"id"?: string,"note"?: string | null,"user_id"?: string,"workout_template_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "workout_sessions_template_fkey"
+      columns: ["workout_template_id","user_id"]
+isOneToOne: false
+      referencedRelation: "workout_templates"
+      referencedColumns: ["id","user_id"]
+    }
                   ]
                 },"workout_templates": {
                   Row: {
@@ -96,7 +168,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            [_ in never]: never
+            "exercise_log_status": "Done"|"Skipped","load_unit": "Kg"|"Plates"|"Bodyweight"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -212,7 +284,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            
+            "exercise_log_status": ["Done", "Skipped"],"load_unit": ["Kg", "Plates", "Bodyweight"]
           }
         }
 } as const

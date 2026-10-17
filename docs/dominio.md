@@ -75,6 +75,16 @@ Na tela, a prescrição aparece como **"2 × 8–10"** (séries × faixa de reps
 Um treino **feito** numa data. Aponta para o `WorkoutTemplate` usado (opcional: pode ser uma
 sessão avulsa) e tem uma observação livre ("15 min de cardio na esteira").
 
+| Estado | Coluna | Significado |
+|---|---|---|
+| **Aberta** | `finished_at` nulo | Em andamento. **No máximo uma por usuário**; a tela Hoje oferece "Continuar" |
+| **Finalizada** | `finished_at` preenchido | Encerrada com "Finalizar". As séries ainda podem ser corrigidas |
+
+A `date` é o "hoje" em `America/Sao_Paulo` no momento de "Começar". Se o treino for apagado da
+ficha, a sessão continua no histórico, sem o vínculo.
+
+> No v1 toda sessão começa de um treino da ficha ativa. Sessão avulsa está no backlog.
+
 ### ExerciseLog — Exercício executado
 O que aconteceu com um exercício dentro de uma sessão.
 
@@ -84,6 +94,10 @@ O que aconteceu com um exercício dentro de uma sessão.
 | `planned_exercise_id` | O exercício prescrito que ele cumpre (opcional) |
 | `status` | `Done` · `Skipped` |
 | `note` | Observação livre: "dor no joelho", "pegada neutra" |
+
+O `ExerciseLog` **nasce quando algo acontece**: na primeira série registrada (`Done`) ou no
+"Pulei" (`Skipped`). Antes disso, a tela mostra o exercício da ficha sem registro. Por isso não
+existe estado "pendente". Há no máximo um `ExerciseLog` por exercício prescrito em cada sessão.
 
 > **Substituição** não é um estado: é um `ExerciseLog` cujo `exercise_id` difere do exercício do
 > `PlannedExercise`. Ex.: prescrito Legpress 45, feito Agachamento guiado.
@@ -114,16 +128,19 @@ Cada série tem **sua própria** carga e repetições — a carga pode mudar den
 
 ## Regras do treino
 
-**Última vez.** Para cada exercício, o app mostra o último `ExerciseLog` com `status = Done`
-daquele `Exercise`, de qualquer sessão anterior, com todas as séries. A busca é **por exercício,
+**Última vez.** Para cada exercício, o app mostra o último `ExerciseLog` com `status = Done` e
+pelo menos uma série daquele `Exercise`, de qualquer **outra** sessão, com todas as séries. "Último"
+é pela `date` da sessão; no mesmo dia, pelo registro mais recente. A busca é **por exercício,
 não por treino**: a Cadeira extensora do Lower B mostra a do Lower A, se ela foi a mais recente.
 
 **Próximo treino sugerido.** O `WorkoutTemplate` seguinte ao da sessão mais recente, na ordem da
 ficha ativa. Depois do último, volta ao primeiro. Sem sessões, sugere o primeiro. É sugestão:
 o usuário pode escolher outro.
 
-**Série pré-preenchida.** "Adicionar série" já traz a carga, a unidade e as repetições da série
-correspondente da última vez. Sem última vez, vem vazio.
+**Série pré-preenchida.** "+ Série" já traz a carga, a unidade e as repetições da série
+correspondente da última vez (a 2ª série de hoje copia a 2ª da última vez). Se a última vez teve
+menos séries, repete a série anterior de hoje. Sem nenhuma das duas, vem vazio. Com valor
+preenchido, um toque já registra a série; ajusta-se depois, no próprio cartão.
 
 **Sugestão de progressão** *(Fatia 4)*. Se, na última vez, **todas** as séries atingiram o
 `rep_max` com a mesma carga e unidade, o app sugere aumentar a carga.

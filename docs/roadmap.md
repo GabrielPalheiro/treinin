@@ -110,7 +110,7 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 ## Backlog — não priorizado
 
-Macronutrientes · Meta diária de kcal · Peso corporal e medidas · Cronômetro de descanso ·
+Macronutrientes · Meta diária de kcal · Sessão avulsa (sem treino da ficha) · Peso corporal e medidas · Cronômetro de descanso ·
 Offline na academia · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários
 
 **Regra:** ideia nova entra aqui, nunca na fatia em andamento.
