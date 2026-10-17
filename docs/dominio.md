@@ -41,11 +41,19 @@ O conjunto de treinos vigente, normalmente passado por um treinador. **Só uma f
 por vez.** Quando a ficha muda, cria-se uma nova; a antiga é arquivada e o histórico continua
 apontando para ela.
 
+| Estado | Coluna | Significado |
+|---|---|---|
+| **Ativa** | `active = true` | A ficha em uso: dela vêm os treinos sugeridos. No máximo uma por usuário |
+| **Inativa** | `active = false`, `archived_at` nulo | Cadastrada, ainda não em uso (ex.: a próxima ficha sendo montada) |
+| **Arquivada** | `archived_at` preenchido | Ficha antiga. Só leitura; o histórico continua apontando para ela. Nunca ativa |
+
+**Ativar** uma ficha desativa a anterior na mesma operação. **Arquivar** é definitivo no v1.
+
 > ❌ Não chame de `Program`, `Routine` nem `Split`.
 
 ### WorkoutTemplate — Treino
-Um treino dentro da ficha: "Lower A", "Upper A", "Lower B", "Upper B". Tem **ordem**, que define
-a rotação.
+Um treino dentro da ficha: "Lower A", "Upper A", "Lower B", "Upper B". Tem **ordem**
+(`position`), que define a rotação. O nome é único dentro da ficha.
 
 > ❌ Não chame de `Day` nem `Workout` sozinho. "Treino de hoje" é uma `WorkoutSession`.
 
@@ -58,7 +66,10 @@ Um exercício dentro de um treino, com a prescrição:
 | `position` | 1 |
 | `target_sets` | 2 |
 | `rep_min` · `rep_max` | 8 · 10 |
-| `technique` | "Segurar 2 s na fase alongada de cada rep." |
+| `technique` | "Segurar 2 s na fase alongada de cada rep." (opcional) |
+
+Na tela, a prescrição aparece como **"2 × 8–10"** (séries × faixa de reps), ou **"3 × 10"** quando
+`rep_min = rep_max`. Limites: 1 a 10 séries; 1 a 100 reps; `rep_min ≤ rep_max`.
 
 ### WorkoutSession — Sessão
 Um treino **feito** numa data. Aponta para o `WorkoutTemplate` usado (opcional: pode ser uma

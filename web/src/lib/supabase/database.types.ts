@@ -19,13 +19,81 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"planned_exercises": {
+                  Row: {
+                    "created_at": string,"exercise_id": string,"id": string,"position": number,"rep_max": number,"rep_min": number,"target_sets": number,"technique": string | null,"user_id": string,"workout_template_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"exercise_id": string,"id"?: string,"position": number,"rep_max": number,"rep_min": number,"target_sets": number,"technique"?: string | null,"user_id"?: string,"workout_template_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"exercise_id"?: string,"id"?: string,"position"?: number,"rep_max"?: number,"rep_min"?: number,"target_sets"?: number,"technique"?: string | null,"user_id"?: string,"workout_template_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "planned_exercises_exercise_fkey"
+      columns: ["exercise_id","user_id"]
+isOneToOne: false
+      referencedRelation: "exercises"
+      referencedColumns: ["id","user_id"]
+    },{
+      foreignKeyName: "planned_exercises_template_fkey"
+      columns: ["workout_template_id","user_id"]
+isOneToOne: false
+      referencedRelation: "workout_templates"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
+                },"workout_plans": {
+                  Row: {
+                    "active": boolean,"archived_at": string | null,"created_at": string,"id": string,"name": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"archived_at"?: string | null,"created_at"?: string,"id"?: string,"name": string,"user_id"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"archived_at"?: string | null,"created_at"?: string,"id"?: string,"name"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"workout_templates": {
+                  Row: {
+                    "created_at": string,"id": string,"name": string,"position": number,"user_id": string,"workout_plan_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"id"?: string,"name": string,"position": number,"user_id"?: string,"workout_plan_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"id"?: string,"name"?: string,"position"?: number,"user_id"?: string,"workout_plan_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "workout_templates_plan_fkey"
+      columns: ["workout_plan_id","user_id"]
+isOneToOne: false
+      referencedRelation: "workout_plans"
+      referencedColumns: ["id","user_id"]
+    }
+                  ]
                 }
           }
           Views: {
             [_ in never]: never
           }
           Functions: {
-            [_ in never]: never
+            "activate_workout_plan":
+{ Args: { "plan_id": string }; Returns: undefined
+                           },
+"reorder_planned_exercises":
+{ Args: { "planned_exercise_ids": (string)[],"template_id": string }; Returns: undefined
+                           },
+"reorder_workout_templates":
+{ Args: { "plan_id": string,"template_ids": (string)[] }; Returns: undefined
+                           }
           }
           Enums: {
             [_ in never]: never

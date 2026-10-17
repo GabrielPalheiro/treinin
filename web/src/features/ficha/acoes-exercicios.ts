@@ -9,29 +9,29 @@ import {
   type NomeDoExercicio,
   type RenomearExercicio,
 } from "./exercicio-schema";
+import { mensagemDeErro, primeiroErro, type ResultadoComId, type ResultadoDaAcao } from "./resultado";
 
-export type ResultadoDaAcao = { erro: string } | undefined;
+const NOME_REPETIDO = { "23505": "Já existe um exercício com esse nome." };
 
-const VIOLACAO_DE_UNICIDADE = "23505";
-const NOME_REPETIDO = "Já existe um exercício com esse nome.";
-const FALHA = "Não foi possível salvar. Tente de novo.";
-
-export async function criarExercicio(dados: NomeDoExercicio): Promise<ResultadoDaAcao> {
+export async function criarExercicio(dados: NomeDoExercicio): Promise<ResultadoComId> {
   const entrada = nomeDoExercicioSchema.safeParse(dados);
-  if (!entrada.success) return { erro: entrada.error.issues[0]?.message ?? FALHA };
+  if (!entrada.success) return { erro: primeiroErro(entrada.error) };
 
   const supabase = await criarClienteServidor();
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("exercises")
-    .insert({ name: normalizarNome(entrada.data.name) });
+    .insert({ name: normalizarNome(entrada.data.name) })
+    .select("id")
+    .single();
 
-  if (error) return traduzirErro(error);
+  if (error) return { erro: mensagemDeErro("exercicios", error, NOME_REPETIDO) };
   refresh();
+  return { id: data.id };
 }
 
 export async function renomearExercicio(dados: RenomearExercicio): Promise<ResultadoDaAcao> {
   const entrada = renomearExercicioSchema.safeParse(dados);
-  if (!entrada.success) return { erro: entrada.error.issues[0]?.message ?? FALHA };
+  if (!entrada.success) return { erro: primeiroErro(entrada.error) };
 
   const supabase = await criarClienteServidor();
   const { data, error } = await supabase
@@ -40,13 +40,7 @@ export async function renomearExercicio(dados: RenomearExercicio): Promise<Resul
     .eq("id", entrada.data.id)
     .select("id");
 
-  if (error) return traduzirErro(error);
+  if (error) return { erro: mensagemDeErro("exercicios", error, NOME_REPETIDO) };
   if (data.length === 0) return { erro: "Exercício não encontrado." };
   refresh();
-}
-
-function traduzirErro(error: { code: string; message: string }): ResultadoDaAcao {
-  if (error.code === VIOLACAO_DE_UNICIDADE) return { erro: NOME_REPETIDO };
-  console.error("[exercicios] falha ao salvar", { code: error.code });
-  return { erro: FALHA };
 }
