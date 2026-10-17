@@ -50,7 +50,7 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] Reordenar exercícios dentro do treino
 - [x] E2E: montar um treino com três exercícios (`pnpm test:e2e`, só local)
 
-**Pronto quando:** sua ficha atual (Lower A, Upper A, Lower B, Upper B) está cadastrada.
+**Pronto quando:** sua ficha atual (Lower A, Upper A, Lower B, Upper B) está cadastrada. ✅ Concluída em 16/10/2026.
 
 ---
 
