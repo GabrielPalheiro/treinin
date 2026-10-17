@@ -69,6 +69,27 @@ export function preencherSerie(
   return base ? { load: base.load, load_unit: base.load_unit, reps: base.reps } : null;
 }
 
+type Registro = { status: ExerciseLogStatus; series: readonly unknown[] } | null;
+
+export type SituacaoDoExercicio = "Pendente" | "Feito" | "Pulado";
+
+/** Sem série registrada ainda conta como pendente, mesmo com troca ou nota. */
+export function situacaoDoExercicio(registro: Registro): SituacaoDoExercicio {
+  if (registro?.status === "Skipped") return "Pulado";
+  if (registro && registro.series.length > 0) return "Feito";
+  return "Pendente";
+}
+
+/** "Pulei" só vale para o que ainda não teve série. */
+export function podePular(registro: Registro): boolean {
+  return situacaoDoExercicio(registro) === "Pendente";
+}
+
+/** Substituição: feito outro exercício no lugar do prescrito. Fora da ficha não é troca. */
+export function foiSubstituido(exercicioPrescritoId: string | null, exercicioFeitoId: string): boolean {
+  return exercicioPrescritoId !== null && exercicioPrescritoId !== exercicioFeitoId;
+}
+
 const numeroBr = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
 
 /** "65 kg", "58,5 kg", "4 placas", "1 placa", "peso corporal". */
