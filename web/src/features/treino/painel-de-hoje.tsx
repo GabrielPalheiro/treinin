@@ -5,7 +5,7 @@ import { haQuantoTempo } from "@/domain/treino/sessao";
 import { BotaoComecar } from "./botao-comecar";
 import { buscarSituacaoDeHoje } from "./consultas";
 
-/** Tela Hoje: continuar a sessão aberta, ou começar o treino sugerido pela rotação. */
+/** Tela Hoje: continuar a sessão aberta, ou começar o treino sugerido pela rotação ou outro da ficha. */
 export async function PainelDeHoje() {
   const { hoje, aberta, concluidasHoje, ficha, sugestao } = await buscarSituacaoDeHoje();
 
@@ -53,7 +53,7 @@ export async function PainelDeHoje() {
         </section>
       ) : (
         <section aria-labelledby="titulo-proximo" className="flex flex-col gap-3 rounded-lg border bg-card p-4">
-          <p className="text-sm text-muted-foreground">Próximo treino</p>
+          <p className="text-sm text-muted-foreground">Treino de hoje · sugerido pela rotação</p>
           <h2 id="titulo-proximo" className="text-2xl font-bold">
             {sugestao.name}
           </h2>
@@ -63,21 +63,20 @@ export async function PainelDeHoje() {
           </p>
           <BotaoComecar treinoId={sugestao.id}>Começar {sugestao.name}</BotaoComecar>
 
+          {/* Sempre à vista: escolher outro treino não pode depender de achar um menu fechado. */}
           {ficha.treinos.length > 1 && (
-            <details className="flex flex-col gap-2">
-              <summary className="flex min-h-toque cursor-pointer items-center text-sm font-medium text-muted-foreground">
-                Outro treino
-              </summary>
-              <div className="flex flex-col gap-2">
-                {ficha.treinos
-                  .filter((t) => t.id !== sugestao.id)
-                  .map((treino) => (
-                    <BotaoComecar key={treino.id} treinoId={treino.id} variante="outline">
-                      {treino.name}
-                    </BotaoComecar>
-                  ))}
-              </div>
-            </details>
+            <div role="group" aria-labelledby="titulo-outros" className="flex flex-col gap-2 pt-2">
+              <p id="titulo-outros" className="text-sm font-medium text-muted-foreground">
+                Ou escolha outro treino
+              </p>
+              {ficha.treinos
+                .filter((t) => t.id !== sugestao.id)
+                .map((treino) => (
+                  <BotaoComecar key={treino.id} treinoId={treino.id} variante="outline">
+                    {treino.name}
+                  </BotaoComecar>
+                ))}
+            </div>
           )}
         </section>
       )}
