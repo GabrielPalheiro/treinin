@@ -153,7 +153,10 @@ test("registrar uma sessão: começar, séries pré-preenchidas, editar e finali
 
 test("sessão completa com substituição, exercício pulado, fora da ficha e nota", async ({ page }) => {
   // Roda depois do primeiro teste: o Upper X foi finalizado, a rotação sugere o Lower X.
+  // Os outros treinos da ficha ficam à vista, sem abrir menu.
   await page.goto("/hoje");
+  const outros = page.getByRole("group", { name: "Ou escolha outro treino" });
+  await expect(outros.getByRole("button", { name: "Upper X" })).toBeVisible();
   await page.getByRole("button", { name: "Começar Lower X" }).click();
   await page.waitForURL(/\/treino\/sessao\/[0-9a-f-]{36}$/);
 
