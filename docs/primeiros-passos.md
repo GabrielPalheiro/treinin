@@ -385,6 +385,25 @@ Em **Settings → Code security**, ligue:
 - Seu e-mail e uma senha
 - ☑️ **Auto Confirm User**
 
+#### Outras pessoas registrando o próprio treino
+
+O mesmo caminho serve para dar acesso a mais alguém. Cada usuário vê **só os próprios dados**
+(RLS): ninguém enxerga a ficha ou as sessões de outro.
+
+1. No projeto **TreinIn**: **Authentication → Users → Add user → Create new user**
+2. E-mail e senha da pessoa, com ☑️ **Auto Confirm User**. Sem isso o login é recusado,
+   porque não sai e-mail de confirmação (ver incidente 002)
+3. Enviar a ela o link do app, o e-mail e a senha. No celular: abrir o link e
+   **Adicionar à tela inicial**
+
+O que a pessoa encontra:
+
+- **App vazio:** sem exercícios e sem ficha. Cadastrar o catálogo e a ficha **antes** do primeiro
+  treino, de preferência pelo PC (mesmo link, mesmo login; o celular vê tudo na hora)
+- **Sem troca de senha no app:** guarde a senha combinada. O e-mail de recuperação do Supabase
+  não resolve, porque o app não tem a tela de definir a nova senha. Apagar e recriar o usuário
+  apaga os dados dele junto
+
 ### 6.4 Anotar os dados de conexão
 
 **Project Settings → API Keys** (em alguns painéis, **Data API**):
