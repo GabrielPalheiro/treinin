@@ -119,7 +119,8 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 ## Backlog — não priorizado
 
 Macronutrientes · Meta diária de kcal · Treino livre (ver abaixo) · Peso corporal e medidas · Cronômetro de descanso ·
-Offline na academia · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários
+Offline na academia · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários ·
+TBCA como base de alimentos (ver abaixo) · Código de barras para alimento próprio (ver abaixo)
 
 ### Treino livre
 Para quem quer registrar o treino sem seguir uma ficha. Começa uma sessão vazia, adiciona os
@@ -130,5 +131,21 @@ guardado como as outras sessões, para consultar depois: histórico, "última ve
   registro sem exercício prescrito ("fora da ficha"), então não precisa de migration
 - **Falta:** "Treino livre" na tela Hoje, a tela da sessão sem cartões da ficha e o nome mostrado
   no lugar do nome do treino
+
+### TBCA como base de alimentos
+A TBCA (USP/FoRC) é a sucessora da TACO: brasileira, atualizada (versão 7.x) e com mais alimentos,
+incluindo preparações. Discutido em 30/10/2026, quando se decidiu manter a TACO no v1.
+
+- **Antes de tudo:** conferir os termos de reuso e se há arquivo para download (tbca.net.br)
+- **Como entraria:** nova migration de dados, com um novo valor em `food_source`; sem mudar a
+  arquitetura. Decidir se substitui a TACO ou convive com ela
+
+### Código de barras para alimento próprio
+Ler o código de barras do produto e preencher nome e kcal por 100 g do alimento `Custom` pelo
+Open Food Facts (gratuito, sem chave, ODbL: exige citar a fonte). Só preenche o cadastro: o
+alimento continua guardado no banco, e a busca do dia a dia não depende da API.
+
+- **Atenção:** integração externa, fora do escopo do v1 (`CLAUDE.md`); dados colaborativos,
+  conferir com o rótulo
 
 **Regra:** ideia nova entra aqui, nunca na fatia em andamento.
