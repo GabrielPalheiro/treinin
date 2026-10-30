@@ -186,9 +186,12 @@ Set-Location ..
 
 ## 9. Estado atual
 
-**Fatia atual: 2 — Sessão de treino.** Fatias 0 e 1 concluídas: app publicado na Vercel e
+**Fatia atual: 3 — Dieta**, em paralelo com a **Fatia 2 — Sessão de treino** em uso (exceção
+registrada em `docs/roadmap.md`, 29/10/2026). Problema do treino trazido da academia tem
+prioridade sobre a Dieta, em PR `fix/` próprio. Fatias 0 e 1 concluídas: app publicado na Vercel e
 instalado no celular, Supabase de produção `TreinIn` em `sa-east-1` (ligado via `supabase link`),
-ficha atual do autor cadastrada e ativa.
+ficha atual do autor cadastrada e ativa. Outras pessoas usam com conta própria criada no painel
+(`docs/primeiros-passos.md`, 6.3).
 
 Notas do que já existe:
 - Next.js 16: `cacheComponents` ligado. Ler cookies, sessão ou relógio só dentro de `<Suspense>`
