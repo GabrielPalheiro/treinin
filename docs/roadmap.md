@@ -13,6 +13,11 @@ e cada uma termina com algo **publicado e usado**.
 
 **Não se começa a Fatia N+1 antes da Fatia N cumprir os três itens.**
 
+> **Exceção (29/10/2026):** a Fatia 3 começou com a Fatia 2 devendo só o item 3 (uso). Todo o
+> código da Fatia 2 estava mergeado e publicado; faltava a semana de uso, que não depende de código.
+> Condições: problema da academia tem prioridade sobre a Dieta, num PR `fix/` próprio; a Fatia 2
+> só é marcada como concluída depois da semana de uso.
+
 Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 ---
@@ -70,12 +75,14 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] Retomar uma sessão do dia que não foi finalizada
 - [x] E2E: sessão completa com substituição e exercício pulado
 - [ ] **Teste de campo:** usar numa sessão real e corrigir o que atrapalhou
+      — em uso desde 29/10/2026, pelo autor e por outras pessoas com conta própria.
+      Corrigido: escolha do treino do dia sempre à vista na tela Hoje (#12)
 
 **Pronto quando:** você treina uma semana inteira registrando só no TreinIn.
 
 ---
 
-## Fatia 3 — Dieta · ~3 sessões
+## Fatia 3 — Dieta · ~3 sessões · em andamento, em paralelo com o uso da Fatia 2
 **Entregável: as calorias do dia aparecem sozinhas**
 
 - [ ] Termos de uso da TACO conferidos; fonte citada na tela de alimentos
