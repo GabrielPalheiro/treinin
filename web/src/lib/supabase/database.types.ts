@@ -51,6 +51,40 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"foods": {
+                  Row: {
+                    "created_at": string,"id": string,"kcal_per_100g": number,"name": string,"source": Database["public"]['Enums']["food_source"],"taco_number": number | null,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"id"?: string,"kcal_per_100g": number,"name": string,"source"?: Database["public"]['Enums']["food_source"],"taco_number"?: number | null,"user_id"?: string | null
+                  }
+                  Update: {
+                    "created_at"?: string,"id"?: string,"kcal_per_100g"?: number,"name"?: string,"source"?: Database["public"]['Enums']["food_source"],"taco_number"?: number | null,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"meal_entries": {
+                  Row: {
+                    "created_at": string,"date": string,"food_id": string,"grams": number,"id": string,"kcal": number,"meal": Database["public"]['Enums']["meal"],"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"date": string,"food_id": string,"grams": number,"id"?: string,"kcal": number,"meal": Database["public"]['Enums']["meal"],"user_id"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"date"?: string,"food_id"?: string,"grams"?: number,"id"?: string,"kcal"?: number,"meal"?: Database["public"]['Enums']["meal"],"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "meal_entries_food_id_fkey"
+      columns: ["food_id"]
+isOneToOne: false
+      referencedRelation: "foods"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"planned_exercises": {
                   Row: {
                     "created_at": string,"exercise_id": string,"id": string,"position": number,"rep_max": number,"rep_min": number,"target_sets": number,"technique": string | null,"user_id": string,"workout_template_id": string
@@ -168,7 +202,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "exercise_log_status": "Done"|"Skipped","load_unit": "Kg"|"Plates"|"Bodyweight"
+            "exercise_log_status": "Done"|"Skipped","food_source": "Taco"|"Custom","load_unit": "Kg"|"Plates"|"Bodyweight","meal": "Breakfast"|"Lunch"|"Snack"|"Dinner"|"Supper"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -284,7 +318,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "exercise_log_status": ["Done", "Skipped"],"load_unit": ["Kg", "Plates", "Bodyweight"]
+            "exercise_log_status": ["Done", "Skipped"],"food_source": ["Taco", "Custom"],"load_unit": ["Kg", "Plates", "Bodyweight"],"meal": ["Breakfast", "Lunch", "Snack", "Dinner", "Supper"]
           }
         }
 } as const

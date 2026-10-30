@@ -76,7 +76,7 @@ User
  ├── Foods (Custom)                  alimentos próprios
  └── MealEntries                     data · refeição · alimento · gramas · kcal (snapshot)
 
-Foods (Taco)                         compartilhados, só leitura, carregados por seed
+Foods (Taco)                         compartilhados, só leitura, carregados por migration
 ```
 
 ### Decisões de modelagem
@@ -160,7 +160,7 @@ web/
   tests/e2e/                      Playwright
 supabase/
   migrations/                     SQL versionado
-  seed.sql                        TACO + dados de desenvolvimento
+  seed.sql                        dados de desenvolvimento (a TACO vem por migration)
 ```
 
 **A única regra de dependência:** `domain/` não importa nada de `app/`, `features/`, `lib/`,
@@ -172,7 +172,9 @@ React ou Supabase. É código puro, testado por unidade. Verificado por regra de
 - Cadastro público **desligado** no Supabase. O usuário é criado pelo painel.
 - Toda tabela do usuário tem `user_id uuid not null default auth.uid()` e RLS
   `using (user_id = auth.uid())` para leitura e escrita.
-- `foods` com `source = 'Taco'`: leitura para qualquer usuário autenticado, escrita negada.
+- `foods` com `source = 'Taco'`: `user_id` nulo (exceção à regra acima), leitura para qualquer
+  usuário autenticado, escrita negada. `Custom`: só o dono lê e escreve. `meal_entries` só aceita
+  alimento visível ao usuário.
 - A chave `service_role` **nunca** vai para o front nem para a Vercel no v1.
 - Teste de RLS: com dois usuários de teste no banco local, um não lê nem altera o dado do outro.
 
@@ -246,6 +248,8 @@ Detalhado em `docs/roadmap.md`.
 | 008 | Regras em `domain/` puro | Regras dentro de componentes e actions | Testáveis por unidade, sem banco e sem React |
 | 009 | Sem importação da planilha | Parser do histórico antigo | Texto livre inconsistente; começar do zero é mais rápido e confiável |
 | 010 | PWA por manifest | App nativo | Instalável no celular com o mesmo código |
+| 011 | TACO carregada por migration (29/10/2026) | Seed, como previsto | O seed só roda no banco local; em produção a Dieta ficaria sem alimentos |
+| 012 | Busca de alimentos filtrada no cliente (29/10/2026) | Busca no banco com `unaccent` | ~600 alimentos cabem numa carga; regra pura e testável em `domain/`, sem extensão no Postgres |
 
 ---
 
