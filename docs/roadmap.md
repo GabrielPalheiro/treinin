@@ -85,9 +85,10 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 ## Fatia 3 — Dieta · ~3 sessões · em andamento, em paralelo com o uso da Fatia 2
 **Entregável: as calorias do dia aparecem sozinhas**
 
-- [ ] Termos de uso da TACO conferidos; fonte citada na tela de alimentos
-- [ ] Migration `foods` + seed com a TACO (nome e kcal por 100 g); RLS de leitura para `Taco`
-- [ ] Migration `meal_entries`, com RLS
+- [x] Termos de uso da TACO conferidos: reprodução permitida citando a fonte (4ª ed., NEPA/UNICAMP, 2011)
+- [ ] Fonte citada na tela de alimentos
+- [x] Migration `foods` + TACO por migration (nome e kcal por 100 g; 593 de 597, 4 sem kcal na tabela); RLS de leitura para `Taco`
+- [x] Migration `meal_entries`, com RLS
 - [ ] `domain/dieta` por TDD: `calcularKcal` (arredondamento), `totalDoDia`, total por refeição
 - [ ] Tela **Dieta**: dia atual agrupado por refeição, totais, navegação entre dias
 - [ ] "+ Alimento": busca sem acento e sem diferenciar maiúsculas; mais usados primeiro
