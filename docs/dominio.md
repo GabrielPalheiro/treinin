@@ -199,6 +199,10 @@ do alimento.
 **Total do dia.** Não é entidade: é a soma dos `kcal` dos `MealEntry` daquela data, também
 mostrada por refeição.
 
+**Busca de alimentos.** O nome precisa conter todas as palavras do termo, em qualquer ordem, sem
+diferenciar acento nem maiúscula. Ordem: mais usados primeiro (contados nos 1000 registros mais
+recentes), depois os que começam com o termo, depois alfabética. Sem termo, só os já usados.
+
 **Copiar refeição.** Copia os `MealEntry` de uma refeição de outro dia para a data atual, já
 recalculados, para o usuário só ajustar as gramas.
 
