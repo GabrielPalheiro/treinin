@@ -3,8 +3,15 @@
 import { refresh } from "next/cache";
 import { z } from "zod";
 import { calcularKcal } from "@/domain/dieta/registro";
-import { mensagemDeErro, primeiroErro, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
+import { normalizarNome } from "@/domain/texto/nome";
+import { mensagemDeErro, primeiroErro, type ResultadoComId, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
+import {
+  alimentoSchema,
+  editarAlimentoSchema,
+  type AlimentoEditado,
+  type NovoAlimento,
+} from "./alimento-schema";
 import { gramasSchema, novoRegistroSchema, type NovoRegistro } from "./registro-schema";
 
 const id = z.uuid();
@@ -50,6 +57,41 @@ export async function editarGramas(registroId: string, gramas: number): Promise<
     .update({ grams: grams.data, kcal: calcularKcal(registro.foods.kcal_per_100g, grams.data) })
     .eq("id", registro.id);
   if (error) return { erro: mensagemDeErro("dieta", error) };
+  refresh();
+}
+
+const NOME_REPETIDO = { "23505": "Você já tem um alimento com esse nome." };
+
+/** Alimento próprio: `source` e `user_id` vêm dos defaults do banco. */
+export async function criarAlimento(dados: NovoAlimento): Promise<ResultadoComId> {
+  const alimento = alimentoSchema.safeParse(dados);
+  if (!alimento.success) return { erro: primeiroErro(alimento.error) };
+
+  const supabase = await criarClienteServidor();
+  const { data, error } = await supabase
+    .from("foods")
+    .insert({ name: normalizarNome(alimento.data.name), kcal_per_100g: alimento.data.kcal_per_100g })
+    .select("id")
+    .single();
+  if (error) return { erro: mensagemDeErro("dieta", error, NOME_REPETIDO) };
+  refresh();
+  return { id: data.id };
+}
+
+/** Corrige nome e kcal. Os registros já feitos guardam o kcal da época (snapshot). */
+export async function editarAlimento(dados: AlimentoEditado): Promise<ResultadoDaAcao> {
+  const alimento = editarAlimentoSchema.safeParse(dados);
+  if (!alimento.success) return { erro: primeiroErro(alimento.error) };
+
+  const supabase = await criarClienteServidor();
+  const { data, error } = await supabase
+    .from("foods")
+    .update({ name: normalizarNome(alimento.data.name), kcal_per_100g: alimento.data.kcal_per_100g })
+    .eq("id", alimento.data.id)
+    .eq("source", "Custom")
+    .select("id");
+  if (error) return { erro: mensagemDeErro("dieta", error, NOME_REPETIDO) };
+  if (data.length === 0) return { erro: "Alimento não encontrado." };
   refresh();
 }
 

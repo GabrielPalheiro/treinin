@@ -2,7 +2,7 @@
 
 import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
-import { normalizarNome } from "@/domain/treino/catalogo";
+import { normalizarNome } from "@/domain/texto/nome";
 import { proximaPosicao } from "@/domain/treino/ficha";
 import { relogioDoSistema } from "@/lib/relogio";
 import { criarClienteServidor } from "@/lib/supabase/servidor";

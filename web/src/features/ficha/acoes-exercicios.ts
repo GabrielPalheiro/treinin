@@ -1,7 +1,7 @@
 "use server";
 
 import { refresh } from "next/cache";
-import { normalizarNome } from "@/domain/treino/catalogo";
+import { normalizarNome } from "@/domain/texto/nome";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 import {
   nomeDoExercicioSchema,

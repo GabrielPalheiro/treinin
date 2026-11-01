@@ -1,5 +1,7 @@
 "use client";
 
+import { Plus } from "lucide-react";
+import Link from "next/link";
 import { useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -77,6 +79,14 @@ export function AdicionarAlimento({ alimentos, usos, rotuloDaRefeicao, registrar
         </ul>
       ) : (
         termo.trim() !== "" && <p className="px-1 text-sm text-muted-foreground">Nenhum alimento encontrado.</p>
+      )}
+      {termo.trim() !== "" && (
+        <Button asChild variant="link" className="justify-start whitespace-normal text-left">
+          <Link href={`/dieta/alimentos?nome=${encodeURIComponent(termo.trim())}`}>
+            <Plus aria-hidden />
+            Cadastrar “{termo.trim()}” como alimento seu
+          </Link>
+        </Button>
       )}
       <Button type="button" variant="ghost" onClick={aoTerminar}>
         Cancelar
