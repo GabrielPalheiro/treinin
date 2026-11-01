@@ -89,10 +89,11 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [ ] Fonte citada na tela de alimentos
 - [x] Migration `foods` + TACO por migration (nome e kcal por 100 g; 593 de 597, 4 sem kcal na tabela); RLS de leitura para `Taco`
 - [x] Migration `meal_entries`, com RLS
-- [ ] `domain/dieta` por TDD: `calcularKcal` (arredondamento), `totalDoDia`, total por refeição
-- [ ] Tela **Dieta**: dia atual agrupado por refeição, totais, navegação entre dias
-- [ ] "+ Alimento": busca sem acento e sem diferenciar maiúsculas; mais usados primeiro
-- [ ] Gramas com teclado decimal; kcal calculada na hora
+- [x] `domain/dieta` por TDD: `calcularKcal` (arredondamento), `totalDoDia`, total por refeição
+- [x] Tela **Dieta**: dia atual agrupado por refeição, totais, navegação entre dias
+- [x] "+ Alimento": busca sem acento e sem diferenciar maiúsculas; mais usados primeiro
+      — dentro do grupo da refeição, como o "+ Série" (sem trocar de tela)
+- [x] Gramas com teclado decimal; kcal calculada na hora
 - [ ] Alimento `Custom`: criar e editar
 - [ ] "Copiar de…" outro dia para a refeição atual
 - [ ] kcal do dia na tela **Hoje**

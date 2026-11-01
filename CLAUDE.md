@@ -208,7 +208,9 @@ Notas do que já existe:
 - Retorno de Server Action e tradução de erro do banco: `@/lib/resultado-da-acao`
 - E2E: `pnpm test:e2e` com `supabase start` de pé; cria e apaga o usuário `e2e@treinin.local`.
   Seletor CSS precisa de `.filter({ visible: true })`: rotas visitadas ficam escondidas na página
-- Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`
+- Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`.
+  Somar dias e validar data da URL: `somarDias`, `lerData` em `@/domain/tempo/calendario`
+- Busca sem acento: `chaveDeBusca`/`palavrasDoTermo` em `@/domain/texto/chave-de-busca`
 - Tokens: `web/src/app/globals.css`; espelho em hex para manifest e ícones em `cores-do-tema.ts`.
   Alvo de toque: `h-toque` / `size-toque`
 - `cn` vem do pacote `cn` (oficial do shadcn), não de um arquivo `utils`
