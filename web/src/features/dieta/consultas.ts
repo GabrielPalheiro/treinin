@@ -14,6 +14,18 @@ export type RegistroDaRefeicao = {
   food: Alimento;
 };
 
+/** Os alimentos que o usuário cadastrou (`Custom`), em ordem alfabética. */
+export async function listarAlimentosProprios(): Promise<Alimento[]> {
+  const supabase = await criarClienteParaLeitura();
+  const { data, error } = await supabase
+    .from("foods")
+    .select("id, name, kcal_per_100g")
+    .eq("source", "Custom")
+    .order("name");
+  if (error) throw error;
+  return data;
+}
+
 export type DiaDaDieta = {
   registros: RegistroDaRefeicao[];
   alimentos: Alimento[];

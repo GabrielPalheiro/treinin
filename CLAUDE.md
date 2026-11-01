@@ -210,7 +210,8 @@ Notas do que já existe:
   Seletor CSS precisa de `.filter({ visible: true })`: rotas visitadas ficam escondidas na página
 - Relógio: `hoje(relogio)` em `@/domain/tempo/hoje`; `relogioDoSistema` em `@/lib/relogio`.
   Somar dias e validar data da URL: `somarDias`, `lerData` em `@/domain/tempo/calendario`
-- Busca sem acento: `chaveDeBusca`/`palavrasDoTermo` em `@/domain/texto/chave-de-busca`
+- Busca sem acento: `chaveDeBusca`/`palavrasDoTermo` em `@/domain/texto/chave-de-busca`;
+  `normalizarNome` (nome como é gravado) em `@/domain/texto/nome`
 - Tokens: `web/src/app/globals.css`; espelho em hex para manifest e ícones em `cores-do-tema.ts`.
   Alvo de toque: `h-toque` / `size-toque`
 - `cn` vem do pacote `cn` (oficial do shadcn), não de um arquivo `utils`

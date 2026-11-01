@@ -1,16 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buscarExercicios, encontrarPorNome, normalizarNome } from "./catalogo";
-
-describe("normalizarNome", () => {
-  it.each([
-    ["Supino reto", "Supino reto"],
-    ["  Supino reto  ", "Supino reto"],
-    ["Supino   reto\tmáquina", "Supino reto máquina"],
-    ["", ""],
-  ])("%j → %j", (entrada, esperado) => {
-    expect(normalizarNome(entrada)).toBe(esperado);
-  });
-});
+import { buscarExercicios, encontrarPorNome } from "./catalogo";
 
 describe("encontrarPorNome", () => {
   // Mesmo critério do índice único do banco: lower(btrim(name)).

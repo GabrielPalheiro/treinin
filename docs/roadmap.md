@@ -86,7 +86,7 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 **Entregável: as calorias do dia aparecem sozinhas**
 
 - [x] Termos de uso da TACO conferidos: reprodução permitida citando a fonte (4ª ed., NEPA/UNICAMP, 2011)
-- [ ] Fonte citada na tela de alimentos
+- [x] Fonte citada na tela de alimentos (e no rodapé da Dieta)
 - [x] Migration `foods` + TACO por migration (nome e kcal por 100 g; 593 de 597, 4 sem kcal na tabela); RLS de leitura para `Taco`
 - [x] Migration `meal_entries`, com RLS
 - [x] `domain/dieta` por TDD: `calcularKcal` (arredondamento), `totalDoDia`, total por refeição
@@ -94,7 +94,8 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] "+ Alimento": busca sem acento e sem diferenciar maiúsculas; mais usados primeiro
       — dentro do grupo da refeição, como o "+ Série" (sem trocar de tela)
 - [x] Gramas com teclado decimal; kcal calculada na hora
-- [ ] Alimento `Custom`: criar e editar
+- [x] Alimento `Custom`: criar e editar — em `/dieta/alimentos`; a busca sem resultado oferece
+      cadastrar com o nome já preenchido
 - [ ] "Copiar de…" outro dia para a refeição atual
 - [ ] kcal do dia na tela **Hoje**
 - [ ] E2E: registrar almoço, copiar para o dia seguinte e ajustar gramas

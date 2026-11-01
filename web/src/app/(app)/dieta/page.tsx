@@ -8,6 +8,7 @@ import { totalDoDia } from "@/domain/dieta/registro";
 import { lerData, somarDias } from "@/domain/tempo/calendario";
 import { hoje, type Data } from "@/domain/tempo/hoje";
 import { carregarDiaDaDieta } from "@/features/dieta/consultas";
+import { FonteTaco } from "@/features/dieta/fonte-taco";
 import { RefeicoesDoDia } from "@/features/dieta/refeicoes-do-dia";
 import { formatarDataLonga } from "@/lib/formatar-data";
 import { relogioDoSistema } from "@/lib/relogio";
@@ -21,10 +22,16 @@ type Props = PageProps<"/dieta">;
 export default function PaginaDieta({ searchParams }: Props) {
   return (
     <main className="flex flex-col gap-6">
-      <h1 className="text-3xl font-bold tracking-tight">Dieta</h1>
+      <header className="flex items-center justify-between gap-4">
+        <h1 className="text-3xl font-bold tracking-tight">Dieta</h1>
+        <Button asChild variant="ghost">
+          <Link href="/dieta/alimentos">Meus alimentos</Link>
+        </Button>
+      </header>
       <Suspense fallback={<p className="text-muted-foreground">Carregando…</p>}>
         <DiaDaDieta searchParams={searchParams} />
       </Suspense>
+      <FonteTaco />
     </main>
   );
 }
