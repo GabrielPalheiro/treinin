@@ -5,6 +5,7 @@ import {
   foiSubstituido,
   haQuantoTempo,
   lerDecimal,
+  nomeDaSessao,
   podePular,
   preencherSerie,
   situacaoDoExercicio,
@@ -37,6 +38,16 @@ describe("sugerirProximoTreino", () => {
 
   it("ficha de um treino só sugere sempre ele", () => {
     expect(sugerirProximoTreino([{ id: "full" }], "full")?.id).toBe("full");
+  });
+});
+
+describe("nomeDaSessao", () => {
+  it("é o nome do treino da ficha", () => {
+    expect(nomeDaSessao("Lower A")).toBe("Lower A");
+  });
+
+  it("sem treino da ficha, é Treino livre", () => {
+    expect(nomeDaSessao(null)).toBe("Treino livre");
   });
 });
 
