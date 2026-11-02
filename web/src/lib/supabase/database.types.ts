@@ -5,7 +5,21 @@ export type Database = {
   
   "public": {
           Tables: {
-            "exercise_logs": {
+            "diet_goals": {
+                  Row: {
+                    "daily_kcal": number,"updated_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "daily_kcal": number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "daily_kcal"?: number,"updated_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"exercise_logs": {
                   Row: {
                     "created_at": string,"exercise_id": string,"id": string,"note": string | null,"planned_exercise_id": string | null,"status": Database["public"]['Enums']["exercise_log_status"],"user_id": string,"workout_session_id": string
                   }

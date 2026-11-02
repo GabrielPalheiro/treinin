@@ -106,6 +106,9 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] "Copiar de…" outro dia para a refeição atual — a mesma refeição, só quando ela está vazia;
       sugere o dia anterior ao da tela
 - [x] kcal do dia na tela **Hoje**
+- [x] **Meta diária de kcal** (02/11/2026, Parte 2 do plano de dieta): uma por usuário (`diet_goals`),
+      com consumido, meta, quanto falta e barra na Dieta e na tela Hoje; passar da meta aparece em
+      tom neutro. Dias passados comparam com a meta atual
 - [x] E2E: registrar almoço, copiar para o dia seguinte e ajustar gramas (e alimento próprio)
 
 **Pronto quando:** você registra todas as refeições de uma semana.
@@ -128,7 +131,7 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 ## Backlog — não priorizado
 
-Macronutrientes · Meta diária de kcal · Peso corporal e medidas · Cronômetro de descanso ·
+Macronutrientes · Peso corporal e medidas · Cronômetro de descanso ·
 Offline na academia · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários ·
 TBCA como base de alimentos (ver abaixo) · Código de barras para alimento próprio (ver abaixo)
 

@@ -26,7 +26,8 @@ Quando houver dúvida entre "mais elegante" e "mais simples e no ar", escolha o 
 - API separada (.NET ou qualquer outra)
 - Cadastro público, multiusuário na interface
 - Importação da planilha antiga
-- Macronutrientes, metas, gráficos avançados, cronômetro
+- Macronutrientes, gráficos avançados, cronômetro (a meta diária de kcal entrou em 02/11/2026;
+  ver `docs/blueprint.md`, decisão 013)
 - App nativo (o v1 é PWA por manifest)
 - Integração com APIs externas de nutrição ou dispositivos
 

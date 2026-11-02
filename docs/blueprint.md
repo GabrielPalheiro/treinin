@@ -41,7 +41,8 @@ o dado e a regra: login, isolamento por usuário, migrations versionadas e teste
 - Não é multiusuário: um usuário, criado à mão no Supabase. Cadastro público desligado.
 - Não importa a planilha antiga. **O histórico começa do zero.**
 - Não calcula macronutrientes (proteína, carboidrato, gordura). Só kcal.
-- Não tem metas, gráficos avançados, cronômetro de descanso nem app nativo.
+- Não tem gráficos avançados, cronômetro de descanso nem app nativo. A meta diária de kcal
+  entrou em 02/11/2026 (decisão 013).
 - Não integra com relógio, balança ou apps de terceiros.
 
 ---
@@ -250,6 +251,7 @@ Detalhado em `docs/roadmap.md`.
 | 010 | PWA por manifest | App nativo | Instalável no celular com o mesmo código |
 | 011 | TACO carregada por migration (29/10/2026) | Seed, como previsto | O seed só roda no banco local; em produção a Dieta ficaria sem alimentos |
 | 012 | Busca de alimentos filtrada no cliente (29/10/2026) | Busca no banco com `unaccent` | ~600 alimentos cabem numa carga; regra pura e testável em `domain/`, sem extensão no Postgres |
+| 013 | Meta diária de kcal no v1, uma por usuário (02/11/2026) | Manter "metas" fora do v1; histórico de metas com `valid_from` | Pedido do autor ao preparar o uso por outra pessoa; a meta atual vale para todos os dias, que é o mais simples e basta enquanto a Fatia 4 só usa médias |
 
 ---
 

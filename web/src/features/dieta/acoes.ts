@@ -6,6 +6,7 @@ import { copiarRegistros } from "@/domain/dieta/copiar";
 import { calcularKcal } from "@/domain/dieta/registro";
 import { normalizarNome } from "@/domain/texto/nome";
 import { mensagemDeErro, primeiroErro, type ResultadoComId, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
+import { relogioDoSistema } from "@/lib/relogio";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 import {
   alimentoSchema,
@@ -13,6 +14,7 @@ import {
   type AlimentoEditado,
   type NovoAlimento,
 } from "./alimento-schema";
+import { metaSchema } from "./meta-schema";
 import { copiaSchema, gramasSchema, novoRegistroSchema, type Copia, type NovoRegistro } from "./registro-schema";
 
 const id = z.uuid();
@@ -126,6 +128,22 @@ export async function removerRegistro(registroId: string): Promise<ResultadoDaAc
 
   const supabase = await criarClienteServidor();
   const { error } = await supabase.from("meal_entries").delete().eq("id", registroId);
+  if (error) return { erro: mensagemDeErro("dieta", error) };
+  refresh();
+}
+
+/** Define ou ajusta a meta diária. Uma linha por usuário: o `user_id` vem de `auth.uid()`. */
+export async function definirMeta(kcal: number): Promise<ResultadoDaAcao> {
+  const meta = metaSchema.safeParse(kcal);
+  if (!meta.success) return { erro: primeiroErro(meta.error) };
+
+  const supabase = await criarClienteServidor();
+  const { error } = await supabase
+    .from("diet_goals")
+    .upsert(
+      { daily_kcal: meta.data, updated_at: relogioDoSistema.agora().toISOString() },
+      { onConflict: "user_id" },
+    );
   if (error) return { erro: mensagemDeErro("dieta", error) };
   refresh();
 }
