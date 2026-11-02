@@ -19,8 +19,17 @@ export type ExecucaoAnterior = {
 export type UltimaVez = { date: Data; series: SerieRegistrada[] };
 
 /**
+ * Nome mostrado da sessão: o do treino da ficha. Sem vínculo é "Treino livre", inclusive a
+ * sessão cujo treino foi apagado da ficha (docs/dominio.md).
+ */
+export function nomeDaSessao(nomeDoTreino: string | null): string {
+  return nomeDoTreino ?? "Treino livre";
+}
+
+/**
  * O treino seguinte ao da última sessão, na ordem da ficha; depois do último, o primeiro.
  * Sem sessões, ou se a última foi de um treino fora desta ficha, o primeiro.
+ * `ultimoTreinoId` é o da última sessão **com** treino da ficha: o treino livre não conta.
  */
 export function sugerirProximoTreino<T extends { id: string }>(
   treinosEmOrdem: readonly T[],

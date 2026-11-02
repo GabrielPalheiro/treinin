@@ -19,9 +19,10 @@ import { AjustesDoCartao } from "./ajustes-do-cartao";
 import type { CartaoDaSessao } from "./consultas";
 import { EditorDeSerie } from "./editor-de-serie";
 
-type Props = { cartao: CartaoDaSessao; sessaoId: string; hoje: Data; catalogo: Exercise[] };
+/** `livre`: sessão sem ficha, onde "fora da ficha" não diz nada. */
+type Props = { cartao: CartaoDaSessao; sessaoId: string; hoje: Data; catalogo: Exercise[]; livre?: boolean };
 
-export function CartaoDoExercicio({ cartao, sessaoId, hoje, catalogo }: Props) {
+export function CartaoDoExercicio({ cartao, sessaoId, hoje, catalogo, livre = false }: Props) {
   const { exercise, prescrito, registro, ultimaVez } = cartao;
   const series = registro?.series ?? [];
   const situacao = situacaoDoExercicio(registro);
@@ -70,7 +71,7 @@ export function CartaoDoExercicio({ cartao, sessaoId, hoje, catalogo }: Props) {
               No lugar de <span className="font-medium">{prescrito.exercise.name}</span>
             </p>
           )}
-          {!prescrito && <p className="text-sm text-muted-foreground">Fora da ficha</p>}
+          {!prescrito && !livre && <p className="text-sm text-muted-foreground">Fora da ficha</p>}
           {prescrito && (
             <p className="text-sm text-muted-foreground">
               <span className="font-medium text-foreground tabular-nums">{formatarPrescricao(prescrito)}</span>

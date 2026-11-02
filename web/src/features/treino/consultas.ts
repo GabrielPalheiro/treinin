@@ -1,5 +1,6 @@
 import { hoje, type Data } from "@/domain/tempo/hoje";
 import {
+  nomeDaSessao,
   sugerirProximoTreino,
   ultimaVez,
   type ExecucaoAnterior,
@@ -14,7 +15,7 @@ import { criarClienteParaLeitura } from "@/lib/supabase/servidor";
 
 // O RLS garante que toda consulta só enxerga dados do usuário logado.
 
-type SessaoResumo = { id: string; date: Data; nomeDoTreino: string | null };
+type SessaoResumo = { id: string; date: Data; nome: string };
 
 export type SituacaoDeHoje = {
   hoje: Data;
@@ -37,6 +38,7 @@ export async function buscarSituacaoDeHoje(): Promise<SituacaoDeHoje> {
     supabase
       .from("workout_sessions")
       .select("workout_template_id")
+      .not("workout_template_id", "is", null) // treino livre não conta para a rotação
       .order("date", { ascending: false })
       .order("created_at", { ascending: false })
       .limit(1)
@@ -54,7 +56,7 @@ export async function buscarSituacaoDeHoje(): Promise<SituacaoDeHoje> {
   const resumo = (s: { id: string; date: string; workout_templates: { name: string } | null }) => ({
     id: s.id,
     date: s.date,
-    nomeDoTreino: s.workout_templates?.name ?? null,
+    nome: nomeDaSessao(s.workout_templates?.name ?? null),
   });
 
   return {
@@ -74,7 +76,7 @@ export async function buscarSessaoAberta(): Promise<SessaoResumo | null> {
     .is("finished_at", null)
     .maybeSingle();
   if (error) throw error;
-  return data && { id: data.id, date: data.date, nomeDoTreino: data.workout_templates?.name ?? null };
+  return data && { id: data.id, date: data.date, nome: nomeDaSessao(data.workout_templates?.name ?? null) };
 }
 
 // ── Sessão ────────────────────────────────────────────────────────────────
@@ -101,7 +103,9 @@ export type SessaoDeTreino = {
   date: Data;
   note: string | null;
   finalizada: boolean;
-  nomeDoTreino: string | null;
+  nome: string;
+  /** Sem treino da ficha: só exercícios adicionados na hora. */
+  livre: boolean;
   hoje: Data;
   cartoes: CartaoDaSessao[];
 };
@@ -187,7 +191,8 @@ export async function carregarSessao(sessaoId: string): Promise<SessaoDeTreino |
     date: sessao.data.date,
     note: sessao.data.note,
     finalizada: sessao.data.finished_at !== null,
-    nomeDoTreino: sessao.data.workout_templates?.name ?? null,
+    nome: nomeDaSessao(sessao.data.workout_templates?.name ?? null),
+    livre: sessao.data.workout_templates === null,
     hoje: hoje(relogioDoSistema),
     cartoes: [...cartoesDaFicha, ...cartoesExtras],
   };

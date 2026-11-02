@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { buscarFichaAtiva } from "@/features/ficha/consultas";
+import { BotaoComecar } from "@/features/treino/botao-comecar";
 import { buscarSessaoAberta } from "@/features/treino/consultas";
 
 export const metadata: Metadata = {
@@ -32,12 +33,19 @@ export default function PaginaTreino() {
   );
 }
 
+/** Continuar a sessão aberta; sem ela, começar um treino livre (os da ficha começam na tela Hoje). */
 async function SessaoEmAndamento() {
   const aberta = await buscarSessaoAberta();
-  if (!aberta) return null;
+  if (!aberta) {
+    return (
+      <BotaoComecar treinoId={null} variante="outline">
+        Começar treino livre
+      </BotaoComecar>
+    );
+  }
   return (
     <Button asChild size="lg">
-      <Link href={`/treino/sessao/${aberta.id}`}>Continuar {aberta.nomeDoTreino ?? "treino"}</Link>
+      <Link href={`/treino/sessao/${aberta.id}`}>Continuar {aberta.nome}</Link>
     </Button>
   );
 }

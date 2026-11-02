@@ -34,7 +34,7 @@ async function Sessao({ params }: Pick<Props, "params">) {
   return (
     <div className="flex flex-col gap-6">
       <header className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight">{sessao.nomeDoTreino ?? "Treino"}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{sessao.nome}</h1>
         <p className="text-muted-foreground first-letter:uppercase">
           {formatarDataLonga(sessao.date)}
           {sessao.finalizada && " · finalizada"}
@@ -42,7 +42,9 @@ async function Sessao({ params }: Pick<Props, "params">) {
       </header>
 
       {sessao.cartoes.length === 0 ? (
-        <p className="text-muted-foreground">Este treino não tem exercícios na ficha.</p>
+        <p className="text-muted-foreground">
+          {sessao.livre ? "Adicione o primeiro exercício abaixo." : "Este treino não tem exercícios na ficha."}
+        </p>
       ) : (
         <ol className="flex flex-col gap-4">
           {sessao.cartoes.map((cartao) => (
@@ -52,12 +54,17 @@ async function Sessao({ params }: Pick<Props, "params">) {
               sessaoId={sessao.id}
               hoje={sessao.hoje}
               catalogo={catalogo}
+              livre={sessao.livre}
             />
           ))}
         </ol>
       )}
 
-      <AdicionarForaDaFicha sessaoId={sessao.id} catalogo={catalogo} />
+      <AdicionarForaDaFicha
+        sessaoId={sessao.id}
+        catalogo={catalogo}
+        titulo={sessao.livre ? "Adicionar exercício" : undefined}
+      />
 
       {sessao.finalizada ? (
         sessao.note && (

@@ -5,8 +5,16 @@ import type { Exercise } from "@/features/ficha/consultas";
 import { EscolherExercicio } from "@/features/ficha/escolher-exercicio";
 import { adicionarForaDaFicha } from "./acoes-sessao";
 
-/** Exercício que não está na ficha: entra no fim da sessão. */
-export function AdicionarForaDaFicha({ sessaoId, catalogo }: { sessaoId: string; catalogo: Exercise[] }) {
+/** Exercício que não está na ficha (ou qualquer um, no treino livre): entra no fim da sessão. */
+export function AdicionarForaDaFicha({
+  sessaoId,
+  catalogo,
+  titulo = "Exercício fora da ficha",
+}: {
+  sessaoId: string;
+  catalogo: Exercise[];
+  titulo?: string;
+}) {
   const [erro, setErro] = useState<string>();
   const [pendente, iniciar] = useTransition();
 
@@ -17,7 +25,7 @@ export function AdicionarForaDaFicha({ sessaoId, catalogo }: { sessaoId: string;
       aria-busy={pendente}
     >
       <h2 id="titulo-fora-da-ficha" className="font-semibold">
-        Exercício fora da ficha
+        {titulo}
       </h2>
       <EscolherExercicio
         catalogo={catalogo}

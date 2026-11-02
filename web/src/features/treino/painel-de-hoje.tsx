@@ -5,7 +5,7 @@ import { haQuantoTempo } from "@/domain/treino/sessao";
 import { BotaoComecar } from "./botao-comecar";
 import { buscarSituacaoDeHoje } from "./consultas";
 
-/** Tela Hoje: continuar a sessão aberta, ou começar o treino sugerido pela rotação ou outro da ficha. */
+/** Tela Hoje: continuar a sessão aberta, ou começar o treino sugerido pela rotação, outro da ficha ou um livre. */
 export async function PainelDeHoje() {
   const { hoje, aberta, concluidasHoje, ficha, sugestao } = await buscarSituacaoDeHoje();
 
@@ -19,7 +19,7 @@ export async function PainelDeHoje() {
         >
           <CircleCheck aria-hidden className="size-5 text-primary" />
           <span>
-            <span className="font-medium">{sessao.nomeDoTreino ?? "Treino"}</span> concluído hoje
+            <span className="font-medium">{sessao.nome}</span> concluído hoje
           </span>
         </Link>
       ))}
@@ -30,7 +30,7 @@ export async function PainelDeHoje() {
             Treino em andamento{aberta.date !== hoje && ` · começou ${haQuantoTempo(aberta.date, hoje)}`}
           </p>
           <h2 id="titulo-em-andamento" className="text-2xl font-bold">
-            {aberta.nomeDoTreino ?? "Treino"}
+            {aberta.nome}
           </h2>
           <Button asChild size="lg">
             <Link href={`/treino/sessao/${aberta.id}`}>Continuar</Link>
@@ -39,7 +39,10 @@ export async function PainelDeHoje() {
       ) : !ficha ? (
         <section className="flex flex-col gap-3 rounded-lg border border-dashed p-4">
           <p className="font-medium">Nenhuma ficha ativa</p>
-          <p className="text-sm text-muted-foreground">Cadastre a ficha do treinador e ative-a para começar.</p>
+          <p className="text-sm text-muted-foreground">
+            Comece um treino livre e adicione os exercícios na hora, ou cadastre a ficha do treinador.
+          </p>
+          <BotaoComecar treinoId={null}>Começar treino livre</BotaoComecar>
           <Button asChild variant="outline">
             <Link href="/ficha">Ir para fichas</Link>
           </Button>
@@ -47,6 +50,7 @@ export async function PainelDeHoje() {
       ) : !sugestao ? (
         <section className="flex flex-col gap-3 rounded-lg border border-dashed p-4">
           <p className="font-medium">A ficha ativa ainda não tem treinos</p>
+          <BotaoComecar treinoId={null}>Começar treino livre</BotaoComecar>
           <Button asChild variant="outline">
             <Link href={`/ficha/${ficha.id}`}>Editar ficha</Link>
           </Button>
@@ -64,20 +68,21 @@ export async function PainelDeHoje() {
           <BotaoComecar treinoId={sugestao.id}>Começar {sugestao.name}</BotaoComecar>
 
           {/* Sempre à vista: escolher outro treino não pode depender de achar um menu fechado. */}
-          {ficha.treinos.length > 1 && (
-            <div role="group" aria-labelledby="titulo-outros" className="flex flex-col gap-2 pt-2">
-              <p id="titulo-outros" className="text-sm font-medium text-muted-foreground">
-                Ou escolha outro treino
-              </p>
-              {ficha.treinos
-                .filter((t) => t.id !== sugestao.id)
-                .map((treino) => (
-                  <BotaoComecar key={treino.id} treinoId={treino.id} variante="outline">
-                    {treino.name}
-                  </BotaoComecar>
-                ))}
-            </div>
-          )}
+          <div role="group" aria-labelledby="titulo-outros" className="flex flex-col gap-2 pt-2">
+            <p id="titulo-outros" className="text-sm font-medium text-muted-foreground">
+              Ou escolha outro treino
+            </p>
+            {ficha.treinos
+              .filter((t) => t.id !== sugestao.id)
+              .map((treino) => (
+                <BotaoComecar key={treino.id} treinoId={treino.id} variante="outline">
+                  {treino.name}
+                </BotaoComecar>
+              ))}
+            <BotaoComecar treinoId={null} variante="outline">
+              Treino livre
+            </BotaoComecar>
+          </div>
         </section>
       )}
     </div>
