@@ -190,6 +190,13 @@ Um alimento comido numa data e refeição: `date`, `meal`, `food_id`, `grams`, `
 
 > ❌ Não chame de `FoodLog`, `Consumption` nem `Diet`.
 
+### DietGoal — Meta da dieta
+A meta diária de kcal do usuário: `daily_kcal`, inteiro de 500 a 9.999. **Uma por usuário** (a
+chave é o `user_id`), sempre a atual: ajustar a meta vale para todos os dias, inclusive os
+passados (decisão de 02/11/2026, sem histórico de metas). Não se apaga, só se ajusta.
+
+> ❌ Não chame de `Target`, `Plan` nem `Budget`.
+
 ---
 
 ## Regras da dieta
@@ -202,6 +209,12 @@ do alimento.
 
 **Total do dia.** Não é entidade: é a soma dos `kcal` dos `MealEntry` daquela data, também
 mostrada por refeição.
+
+**Progresso da meta** (`progressoDaMeta`). Compara o total do dia com a `DietGoal`:
+`falta = meta − consumido` e `excedente = consumido − meta`, nenhum dos dois abaixo de zero. A
+barra vai de 0 a cheia e não passa disso. Passar da meta não é erro: o excedente aparece em tom
+neutro ("250 acima da meta"), sem alerta. Sem meta definida, as telas mostram só o total e um
+convite para definir.
 
 **Busca de alimentos.** O nome precisa conter todas as palavras do termo, em qualquer ordem, sem
 diferenciar acento nem maiúscula. Ordem: mais usados primeiro (contados nos 1000 registros mais

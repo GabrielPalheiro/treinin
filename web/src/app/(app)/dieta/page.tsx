@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { totalDoDia } from "@/domain/dieta/registro";
 import { lerData, somarDias } from "@/domain/tempo/calendario";
 import { hoje, type Data } from "@/domain/tempo/hoje";
-import { carregarDiaDaDieta } from "@/features/dieta/consultas";
+import { buscarMeta, carregarDiaDaDieta } from "@/features/dieta/consultas";
 import { FonteTaco } from "@/features/dieta/fonte-taco";
+import { MetaDiaria } from "@/features/dieta/meta-diaria";
 import { RefeicoesDoDia } from "@/features/dieta/refeicoes-do-dia";
 import { formatarDataLonga } from "@/lib/formatar-data";
 import { relogioDoSistema } from "@/lib/relogio";
@@ -49,7 +50,8 @@ async function DiaDaDieta({ searchParams }: Pick<Props, "searchParams">) {
   const dataDeHoje = hoje(relogioDoSistema);
   // Sem data na URL, ou data inválida: hoje.
   const data = lerData(typeof dataDaUrl === "string" ? dataDaUrl : undefined) ?? dataDeHoje;
-  const { registros, alimentos, usos } = await carregarDiaDaDieta(data);
+  const [{ registros, alimentos, usos }, meta] = await Promise.all([carregarDiaDaDieta(data), buscarMeta()]);
+  const consumido = totalDoDia(registros);
   const linkDoDia = (d: Data) => (d === dataDeHoje ? "/dieta" : `/dieta?data=${d}`);
 
   return (
@@ -62,7 +64,7 @@ async function DiaDaDieta({ searchParams }: Pick<Props, "searchParams">) {
         </Button>
         <div className="flex flex-col items-center text-center">
           <p className="font-semibold first-letter:uppercase">{rotuloDoDia(data, dataDeHoje)}</p>
-          <p className="text-2xl font-bold tabular-nums">{totalDoDia(registros)} kcal</p>
+          <p className="text-2xl font-bold tabular-nums">{consumido} kcal</p>
         </div>
         <Button asChild variant="ghost" size="icon">
           <Link href={linkDoDia(somarDias(data, 1))} aria-label="Dia seguinte">
@@ -70,6 +72,7 @@ async function DiaDaDieta({ searchParams }: Pick<Props, "searchParams">) {
           </Link>
         </Button>
       </nav>
+      <MetaDiaria consumido={consumido} meta={meta} />
       {data !== dataDeHoje && (
         <Button asChild variant="outline" className="self-center">
           <Link href="/dieta">Voltar para hoje</Link>

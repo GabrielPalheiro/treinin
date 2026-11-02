@@ -95,3 +95,36 @@ test("alimento próprio: cadastrar pela busca e usar na refeição", async ({ pa
   await lanche.getByRole("button", { name: "Registrar" }).click();
   await expect(alimentosDe(page, "Lanche").nth(0)).toContainText("120 kcal");
 });
+
+test("meta diária: definir, ver quanto falta e o excedente, na Dieta e na tela Hoje", async ({ page }) => {
+  // Roda depois dos dois testes acima: hoje tem 204 + 120 = 324 kcal.
+  await page.goto("/hoje");
+  const resumo = page.getByRole("link", { name: /Dieta de hoje/ });
+  await expect(resumo).toContainText("Defina uma meta na Dieta");
+
+  await page.goto("/dieta");
+  await page.getByRole("button", { name: "Definir meta diária" }).click();
+  const campo = page.getByLabel("Meta diária (kcal)");
+  await campo.fill("499");
+  await page.getByRole("button", { name: "Salvar meta" }).click();
+  await expect(page.getByText("Use pelo menos 500 kcal")).toBeVisible();
+  await campo.fill("2.000");
+  await page.getByRole("button", { name: "Salvar meta" }).click();
+  const meta = page.getByRole("button", { name: /^Ajustar meta diária/ });
+  await expect(meta).toContainText("de 2.000 kcal · faltam 1.676");
+  await expect(meta.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "16");
+
+  // Ajustar abaixo do consumido: excedente em tom neutro, barra cheia
+  await meta.click();
+  await expect(campo).toHaveValue("2000");
+  await campo.fill("500");
+  await page.getByRole("button", { name: "Salvar meta" }).click();
+  await expect(page.getByRole("button", { name: /^Ajustar meta diária/ })).toContainText("de 500 kcal · faltam 176");
+  await registrar(page, "Jantar", "arroz tipo 1 cozido", "200"); // +256 kcal → 580
+  await expect(page.getByRole("button", { name: /^Ajustar meta diária/ })).toContainText("de 500 kcal · 80 acima da meta");
+  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "100");
+
+  await page.goto("/hoje");
+  await expect(resumo).toContainText("580 kcal");
+  await expect(resumo).toContainText("de 500 kcal · 80 acima da meta");
+});

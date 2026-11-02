@@ -80,3 +80,11 @@ export async function carregarDiaDaDieta(data: Data): Promise<DiaDaDieta> {
     usos,
   };
 }
+
+/** A meta diária de kcal do usuário (`DietGoal`), ou nulo se ainda não definiu. */
+export async function buscarMeta(): Promise<number | null> {
+  const supabase = await criarClienteParaLeitura();
+  const { data, error } = await supabase.from("diet_goals").select("daily_kcal").maybeSingle();
+  if (error) throw error;
+  return data?.daily_kcal ?? null;
+}
