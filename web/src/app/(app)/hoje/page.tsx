@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { hoje } from "@/domain/tempo/hoje";
 import { BotaoSair } from "@/features/auth/botao-sair";
+import { ResumoDaDietaDeHoje } from "@/features/dieta/resumo-de-hoje";
 import { PainelDeHoje } from "@/features/treino/painel-de-hoje";
 import { formatarDataLonga } from "@/lib/formatar-data";
 import { relogioDoSistema } from "@/lib/relogio";
@@ -25,6 +26,9 @@ export default function PaginaHoje() {
       </header>
       <Suspense fallback={<p className="text-muted-foreground">Carregando…</p>}>
         <PainelDeHoje />
+      </Suspense>
+      <Suspense fallback={null}>
+        <ResumoDaDietaDeHoje />
       </Suspense>
     </main>
   );

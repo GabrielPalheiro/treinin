@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Copy, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { refeicoesEmOrdem, totalPorRefeicao, type Meal } from "@/domain/dieta/registro";
@@ -8,6 +8,7 @@ import type { Data } from "@/domain/tempo/hoje";
 import { editarGramas, registrarAlimento, removerRegistro } from "./acoes";
 import { AdicionarAlimento } from "./adicionar-alimento";
 import type { Alimento, RegistroDaRefeicao } from "./consultas";
+import { CopiarRefeicao } from "./copiar-refeicao";
 import { EditorDeGramas } from "./editor-de-gramas";
 import { formatarNumero } from "./formatar";
 
@@ -30,7 +31,7 @@ type Props = {
 export function RefeicoesDoDia({ data, registros, alimentos, usos }: Props) {
   const mapaDeUsos = useMemo(() => new Map(Object.entries(usos)), [usos]);
   const totais = totalPorRefeicao(registros);
-  // Um editor aberto por vez na tela: o id do registro, ou "+meal" para o "+ Alimento".
+  // Um editor aberto por vez na tela: o id do registro, "+meal" (+ Alimento) ou "copiarmeal" (Copiar de…).
   const [aberto, setAberto] = useState<string | null>(null);
   const fechar = () => setAberto(null);
 
@@ -90,11 +91,22 @@ export function RefeicoesDoDia({ data, registros, alimentos, usos }: Props) {
                 registrar={(alimento, grams) => registrarAlimento({ date: data, meal, food_id: alimento.id, grams })}
                 aoTerminar={fechar}
               />
+            ) : aberto === `copiar${meal}` ? (
+              <CopiarRefeicao data={data} meal={meal} rotuloDaRefeicao={rotulo} aoTerminar={fechar} />
             ) : (
-              <Button variant="secondary" className="w-full" onClick={() => setAberto(`+${meal}`)}>
-                <Plus aria-hidden />
-                Alimento
-              </Button>
+              <div className="flex flex-col gap-1">
+                <Button variant="secondary" className="w-full" onClick={() => setAberto(`+${meal}`)}>
+                  <Plus aria-hidden />
+                  Alimento
+                </Button>
+                {/* Só na refeição vazia: copiar por cima duplicaria os alimentos. */}
+                {daRefeicao.length === 0 && (
+                  <Button variant="ghost" className="w-full" onClick={() => setAberto(`copiar${meal}`)}>
+                    <Copy aria-hidden />
+                    Copiar de…
+                  </Button>
+                )}
+              </div>
             )}
           </li>
         );

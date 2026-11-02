@@ -96,9 +96,10 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [x] Gramas com teclado decimal; kcal calculada na hora
 - [x] Alimento `Custom`: criar e editar — em `/dieta/alimentos`; a busca sem resultado oferece
       cadastrar com o nome já preenchido
-- [ ] "Copiar de…" outro dia para a refeição atual
-- [ ] kcal do dia na tela **Hoje**
-- [ ] E2E: registrar almoço, copiar para o dia seguinte e ajustar gramas
+- [x] "Copiar de…" outro dia para a refeição atual — a mesma refeição, só quando ela está vazia;
+      sugere o dia anterior ao da tela
+- [x] kcal do dia na tela **Hoje**
+- [x] E2E: registrar almoço, copiar para o dia seguinte e ajustar gramas (e alimento próprio)
 
 **Pronto quando:** você registra todas as refeições de uma semana.
 

@@ -41,6 +41,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Saída do Playwright: depois de uma falha, traz o visualizador de trace (JS minificado).
+    "playwright-report/**",
+    "test-results/**",
   ]),
 ]);
 

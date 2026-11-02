@@ -2,6 +2,7 @@
 
 import { refresh } from "next/cache";
 import { z } from "zod";
+import { copiarRegistros } from "@/domain/dieta/copiar";
 import { calcularKcal } from "@/domain/dieta/registro";
 import { normalizarNome } from "@/domain/texto/nome";
 import { mensagemDeErro, primeiroErro, type ResultadoComId, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
@@ -12,7 +13,7 @@ import {
   type AlimentoEditado,
   type NovoAlimento,
 } from "./alimento-schema";
-import { gramasSchema, novoRegistroSchema, type NovoRegistro } from "./registro-schema";
+import { copiaSchema, gramasSchema, novoRegistroSchema, type Copia, type NovoRegistro } from "./registro-schema";
 
 const id = z.uuid();
 
@@ -60,7 +61,32 @@ export async function editarGramas(registroId: string, gramas: number): Promise<
   refresh();
 }
 
-const NOME_REPETIDO = { "23505": "Você já tem um alimento com esse nome." };
+/** Copia a refeição de outro dia para o dia na tela, com o kcal recalculado pelo valor atual. */
+export async function copiarRefeicao(dados: Copia): Promise<ResultadoDaAcao> {
+  const copia = copiaSchema.safeParse(dados);
+  if (!copia.success) return { erro: primeiroErro(copia.error) };
+  const { origem, destino, meal } = copia.data;
+
+  const supabase = await criarClienteServidor();
+  const { data: daOrigem, error: erroDaOrigem } = await supabase
+    .from("meal_entries")
+    .select("food_id, grams, foods!inner(kcal_per_100g)")
+    .eq("date", origem)
+    .eq("meal", meal)
+    .order("created_at");
+  if (erroDaOrigem) return { erro: mensagemDeErro("dieta", erroDaOrigem) };
+  if (daOrigem.length === 0) return { erro: "Nada registrado nessa refeição no dia escolhido." };
+
+  const copiados = copiarRegistros(
+    daOrigem.map((r) => ({ food_id: r.food_id, grams: r.grams, kcal_per_100g: r.foods.kcal_per_100g })),
+    { date: destino, meal },
+  );
+  const { error } = await supabase.from("meal_entries").insert(copiados);
+  if (error) return { erro: mensagemDeErro("dieta", error) };
+  refresh();
+}
+
+const NOME_REPETIDO ={ "23505": "Você já tem um alimento com esse nome." };
 
 /** Alimento próprio: `source` e `user_id` vêm dos defaults do banco. */
 export async function criarAlimento(dados: NovoAlimento): Promise<ResultadoComId> {

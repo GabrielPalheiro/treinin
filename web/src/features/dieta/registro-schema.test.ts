@@ -1,5 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { gramasDoFormularioSchema } from "./registro-schema";
+import { copiaSchema, gramasDoFormularioSchema } from "./registro-schema";
+
+describe("copiaSchema", () => {
+  it("aceita copiar de outro dia", () => {
+    const copia = { origem: "2026-11-01", destino: "2026-11-02", meal: "Lunch" };
+    expect(copiaSchema.parse(copia)).toEqual(copia);
+  });
+
+  it.each([
+    [{ origem: "2026-11-02", destino: "2026-11-02", meal: "Lunch" }, "Escolha outro dia"],
+    [{ origem: "", destino: "2026-11-02", meal: "Lunch" }, "Escolha o dia"],
+    [{ origem: "2026-02-30", destino: "2026-11-02", meal: "Lunch" }, "Escolha o dia"],
+  ])("%j acusa %j", (copia, mensagem) => {
+    const resultado = copiaSchema.safeParse(copia);
+    expect(resultado.error?.issues).toEqual([expect.objectContaining({ path: ["origem"], message: mensagem })]);
+  });
+});
 
 describe("gramasDoFormularioSchema", () => {
   it.each([

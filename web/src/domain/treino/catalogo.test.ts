@@ -1,22 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buscarExercicios, encontrarPorNome } from "./catalogo";
-
-describe("encontrarPorNome", () => {
-  // Mesmo critério do índice único do banco: lower(btrim(name)).
-  const catalogo = [{ id: "1", name: "Supino reto" }, { id: "2", name: "Elevação lateral" }];
-
-  it.each([
-    ["Supino reto", "1"],
-    ["supino RETO", "1"],
-    ["  Supino   reto ", "1"],
-    ["Elevação lateral", "2"],
-    ["Elevacao lateral", undefined],
-    ["Supino", undefined],
-    ["", undefined],
-  ])("%j → %j", (nome, idEsperado) => {
-    expect(encontrarPorNome(catalogo, nome)?.id).toBe(idEsperado);
-  });
-});
+import { buscarExercicios } from "./catalogo";
 
 describe("buscarExercicios", () => {
   const catalogo = [

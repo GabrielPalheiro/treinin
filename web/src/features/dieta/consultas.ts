@@ -1,4 +1,4 @@
-import type { Meal } from "@/domain/dieta/registro";
+import { totalDoDia, type Meal } from "@/domain/dieta/registro";
 import type { Data } from "@/domain/tempo/hoje";
 import { criarClienteParaLeitura } from "@/lib/supabase/servidor";
 
@@ -13,6 +13,14 @@ export type RegistroDaRefeicao = {
   kcal: number;
   food: Alimento;
 };
+
+/** kcal já registradas na data: a soma dos snapshots. */
+export async function totalDaData(data: Data): Promise<number> {
+  const supabase = await criarClienteParaLeitura();
+  const { data: registros, error } = await supabase.from("meal_entries").select("kcal").eq("date", data);
+  if (error) throw error;
+  return totalDoDia(registros);
+}
 
 /** Os alimentos que o usuário cadastrou (`Custom`), em ordem alfabética. */
 export async function listarAlimentosProprios(): Promise<Alimento[]> {

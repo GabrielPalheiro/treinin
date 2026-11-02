@@ -28,3 +28,14 @@ export const novoRegistroSchema = z.object({
 });
 
 export type NovoRegistro = z.infer<typeof novoRegistroSchema>;
+
+/** "Copiar de…": a mesma refeição de outro dia (`origem`) para o dia na tela (`destino`). */
+export const copiaSchema = z
+  .object({
+    origem: z.iso.date({ error: "Escolha o dia" }),
+    destino: z.iso.date(),
+    meal: z.enum(refeicoesEmOrdem),
+  })
+  .refine((c) => c.origem !== c.destino, { message: "Escolha outro dia", path: ["origem"] });
+
+export type Copia = z.infer<typeof copiaSchema>;
