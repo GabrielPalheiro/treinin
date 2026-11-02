@@ -80,6 +80,10 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 - [ ] **Teste de campo:** usar numa sessão real e corrigir o que atrapalhou
       — em uso desde 29/10/2026, pelo autor e por outras pessoas com conta própria.
       Corrigido: escolha do treino do dia sempre à vista na tela Hoje (#12)
+- [x] **Treino livre** (veio do backlog em 02/11/2026, antes do teste com um usuário novo, que
+      chega sem ficha): sessão sem treino da ficha, exercícios do catálogo ou criados na hora.
+      Entra no histórico e na "última vez" como as outras; não conta para a rotação.
+      Sem migration: o banco já aceitava `workout_template_id` nulo
 
 **Pronto quando:** você treina uma semana inteira registrando só no TreinIn.
 
@@ -124,19 +128,9 @@ Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 ## Backlog — não priorizado
 
-Macronutrientes · Meta diária de kcal · Treino livre (ver abaixo) · Peso corporal e medidas · Cronômetro de descanso ·
+Macronutrientes · Meta diária de kcal · Peso corporal e medidas · Cronômetro de descanso ·
 Offline na academia · Exportar CSV · Treino compartilhado pelo treinador · Múltiplos usuários ·
 TBCA como base de alimentos (ver abaixo) · Código de barras para alimento próprio (ver abaixo)
-
-### Treino livre
-Para quem quer registrar o treino sem seguir uma ficha. Começa uma sessão vazia, adiciona os
-exercícios que fizer (do catálogo ou criados na hora) e marca séries, carga e repetições. Tudo fica
-guardado como as outras sessões, para consultar depois: histórico, "última vez" e evolução.
-
-- **Base pronta:** o banco já aceita sessão sem treino da ficha (`workout_template_id` nulo) e
-  registro sem exercício prescrito ("fora da ficha"), então não precisa de migration
-- **Falta:** "Treino livre" na tela Hoje, a tela da sessão sem cartões da ficha e o nome mostrado
-  no lugar do nome do treino
 
 ### TBCA como base de alimentos
 A TBCA (USP/FoRC) é a sucessora da TACO: brasileira, atualizada (versão 7.x) e com mais alimentos,

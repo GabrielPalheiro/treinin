@@ -3,9 +3,10 @@
 import { Play } from "lucide-react";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { comecarSessao } from "./acoes-sessao";
+import { comecarSessao, comecarTreinoLivre } from "./acoes-sessao";
 
-type Props = { treinoId: string; children: React.ReactNode; variante?: "default" | "outline" };
+/** `treinoId` nulo começa um treino livre. */
+type Props = { treinoId: string | null; children: React.ReactNode; variante?: "default" | "outline" };
 
 export function BotaoComecar({ treinoId, children, variante = "default" }: Props) {
   const [erro, setErro] = useState<string>();
@@ -20,7 +21,7 @@ export function BotaoComecar({ treinoId, children, variante = "default" }: Props
         disabled={pendente}
         onClick={() =>
           iniciar(async () => {
-            const resultado = await comecarSessao(treinoId);
+            const resultado = await (treinoId ? comecarSessao(treinoId) : comecarTreinoLivre());
             if (resultado) setErro(resultado.erro);
           })
         }

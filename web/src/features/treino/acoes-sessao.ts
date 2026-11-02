@@ -24,7 +24,15 @@ const VIOLACAO_DE_UNICIDADE = "23505";
 /** Abre a sessão de hoje com o treino escolhido. Se já houver uma aberta, vai para ela. */
 export async function comecarSessao(treinoId: string): Promise<ResultadoDaAcao> {
   if (!id.safeParse(treinoId).success) return { erro: "Treino inválido." };
+  return abrirSessao(treinoId);
+}
 
+/** Abre a sessão de hoje sem treino da ficha: os exercícios entram na hora. */
+export async function comecarTreinoLivre(): Promise<ResultadoDaAcao> {
+  return abrirSessao(null);
+}
+
+async function abrirSessao(treinoId: string | null): Promise<ResultadoDaAcao> {
   const supabase = await criarClienteServidor();
   const { data, error } = await supabase
     .from("workout_sessions")

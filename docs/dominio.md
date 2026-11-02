@@ -83,8 +83,12 @@ sessão avulsa) e tem uma observação livre ("15 min de cardio na esteira").
 A `date` é o "hoje" em `America/Sao_Paulo` no momento de "Começar". Se o treino for apagado da
 ficha, a sessão continua no histórico, sem o vínculo.
 
-> No v1 toda sessão começa de um treino da ficha ativa. O **treino livre** (sessão sem ficha) está
-> no backlog: é uma `WorkoutSession` com `workout_template_id` nulo, só com exercícios fora da ficha.
+**Treino livre.** Uma `WorkoutSession` com `workout_template_id` nulo: começa vazia, e cada
+exercício entra como "fora da ficha" (do catálogo ou criado na hora). Na tela, o nome é
+"Treino livre" (`nomeDaSessao`). A sessão cujo treino foi apagado da ficha também fica sem o
+vínculo e passa a aparecer como "Treino livre": decisão de 02/11/2026, sem migration, porque as
+duas ficam iguais no banco. Conta para a "última vez" como qualquer sessão, mas **não** para a
+rotação.
 
 ### ExerciseLog — Exercício executado
 O que aconteceu com um exercício dentro de uma sessão.
@@ -145,8 +149,8 @@ pelo menos uma série daquele `Exercise`, de qualquer **outra** sessão, com tod
 é pela `date` da sessão; no mesmo dia, pelo registro mais recente. A busca é **por exercício,
 não por treino**: a Cadeira extensora do Lower B mostra a do Lower A, se ela foi a mais recente.
 
-**Próximo treino sugerido.** O `WorkoutTemplate` seguinte ao da sessão mais recente, na ordem da
-ficha ativa. Depois do último, volta ao primeiro. Sem sessões, sugere o primeiro. É sugestão:
+**Próximo treino sugerido.** O `WorkoutTemplate` seguinte ao da sessão mais recente **com treino
+da ficha** (o treino livre não conta), na ordem da ficha ativa. Depois do último, volta ao primeiro. Sem sessões, sugere o primeiro. É sugestão:
 o usuário pode escolher outro.
 
 **Série pré-preenchida.** "+ Série" já traz a carga, a unidade e as repetições da série
