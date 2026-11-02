@@ -1,8 +1,10 @@
+import { UserRound } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
+import { Button } from "@/components/ui/button";
 import { hoje } from "@/domain/tempo/hoje";
-import { BotaoSair } from "@/features/auth/botao-sair";
 import { ResumoDaDietaDeHoje } from "@/features/dieta/resumo-de-hoje";
 import { PainelDeHoje } from "@/features/treino/painel-de-hoje";
 import { formatarDataLonga } from "@/lib/formatar-data";
@@ -22,7 +24,11 @@ export default function PaginaHoje() {
             <DataDeHoje />
           </Suspense>
         </div>
-        <BotaoSair />
+        <Button asChild variant="ghost" size="icon">
+          <Link href="/conta" aria-label="Conta">
+            <UserRound aria-hidden />
+          </Link>
+        </Button>
       </header>
       <Suspense fallback={<p className="text-muted-foreground">Carregando…</p>}>
         <PainelDeHoje />

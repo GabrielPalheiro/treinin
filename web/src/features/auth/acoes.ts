@@ -1,9 +1,11 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { primeiroErro, type ResultadoDaAcao } from "@/lib/resultado-da-acao";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 import { credenciaisSchema, type Credenciais } from "./credenciais";
-import { mensagemDeErroDoLogin } from "./mensagem-de-erro";
+import { mensagemDeErroDaSenha, mensagemDeErroDoLogin } from "./mensagem-de-erro";
+import { novaSenhaSchema, type NovaSenha } from "./nova-senha";
 
 export type ResultadoEntrar = { erro: string } | undefined;
 
@@ -31,4 +33,18 @@ export async function sair(): Promise<void> {
   const supabase = await criarClienteServidor();
   await supabase.auth.signOut();
   redirect("/entrar");
+}
+
+/** Troca a senha do usuário logado. A sessão atual continua valendo. */
+export async function alterarSenha(dados: NovaSenha): Promise<ResultadoDaAcao> {
+  const entrada = novaSenhaSchema.safeParse(dados);
+  if (!entrada.success) return { erro: primeiroErro(entrada.error) };
+
+  const supabase = await criarClienteServidor();
+  const { error } = await supabase.auth.updateUser({ password: entrada.data.senha });
+  if (error) {
+    // Vai para os logs da Vercel; sem a senha.
+    console.error("[auth] troca de senha recusada", { code: error.code, status: error.status });
+    return { erro: mensagemDeErroDaSenha(error.code) };
+  }
 }
