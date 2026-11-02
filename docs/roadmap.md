@@ -18,6 +18,9 @@ e cada uma termina com algo **publicado e usado**.
 > Condições: problema da academia tem prioridade sobre a Dieta, num PR `fix/` próprio; a Fatia 2
 > só é marcada como concluída depois da semana de uso.
 
+> **Antes do teste com um usuário novo (02/11/2026):** treino livre (Fatia 2) e **alterar senha**
+> na tela Conta (`/conta`, com o "Sair"), para quem recebe uma senha provisória.
+
 Unidade de estimativa: **sessão** ≈ 3 horas de trabalho concentrado.
 
 ---

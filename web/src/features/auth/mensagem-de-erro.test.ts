@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mensagemDeErroDoLogin } from "./mensagem-de-erro";
+import { mensagemDeErroDaSenha, mensagemDeErroDoLogin } from "./mensagem-de-erro";
 
 describe("mensagemDeErroDoLogin", () => {
   it.each([
@@ -10,5 +10,17 @@ describe("mensagemDeErroDoLogin", () => {
     [undefined, "Não foi possível entrar agora. Tente de novo em instantes."],
   ])("%s → %s", (codigo, esperado) => {
     expect(mensagemDeErroDoLogin(codigo)).toBe(esperado);
+  });
+});
+
+describe("mensagemDeErroDaSenha", () => {
+  it.each([
+    ["same_password", "A nova senha precisa ser diferente da atual."],
+    ["weak_password", "Senha fraca. Use pelo menos 8 caracteres."],
+    ["over_request_rate_limit", "Muitas tentativas. Aguarde alguns minutos e tente de novo."],
+    ["session_not_found", "Não foi possível alterar a senha agora. Tente de novo em instantes."],
+    [undefined, "Não foi possível alterar a senha agora. Tente de novo em instantes."],
+  ])("%s → %s", (codigo, esperado) => {
+    expect(mensagemDeErroDaSenha(codigo)).toBe(esperado);
   });
 });

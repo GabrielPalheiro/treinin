@@ -393,16 +393,18 @@ O mesmo caminho serve para dar acesso a mais alguém. Cada usuário vê **só os
 1. No projeto **TreinIn**: **Authentication → Users → Add user → Create new user**
 2. E-mail e senha da pessoa, com ☑️ **Auto Confirm User**. Sem isso o login é recusado,
    porque não sai e-mail de confirmação (ver incidente 002)
-3. Enviar a ela o link do app, o e-mail e a senha. No celular: abrir o link e
+3. Enviar a ela o link do app, o e-mail e uma senha **provisória**. No celular: abrir o link e
    **Adicionar à tela inicial**
+4. Pedir que ela troque a senha no primeiro acesso: ícone de pessoa no topo da tela **Hoje** →
+   **Conta** → **Alterar senha** (a nova, duas vezes; mínimo 8 caracteres)
 
 O que a pessoa encontra:
 
-- **App vazio:** sem exercícios e sem ficha. Cadastrar o catálogo e a ficha **antes** do primeiro
-  treino, de preferência pelo PC (mesmo link, mesmo login; o celular vê tudo na hora)
-- **Sem troca de senha no app:** guarde a senha combinada. O e-mail de recuperação do Supabase
-  não resolve, porque o app não tem a tela de definir a nova senha. Apagar e recriar o usuário
-  apaga os dados dele junto
+- **App vazio:** sem exercícios e sem ficha. Dá para treinar no primeiro dia com **Treino livre**
+  (na tela Hoje), criando os exercícios na hora. A ficha pode ser cadastrada depois, de
+  preferência pelo PC (mesmo link, mesmo login; o celular vê tudo na hora)
+- **Sem "esqueci a senha":** não sai e-mail (ver incidente 002), então a pessoa precisa guardar a
+  senha nova. **Não** apague e recrie o usuário para resolver: isso apaga os dados dele junto
 
 ### 6.4 Anotar os dados de conexão
 

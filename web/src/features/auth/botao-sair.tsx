@@ -5,7 +5,7 @@ import { sair } from "./acoes";
 export function BotaoSair() {
   return (
     <form action={sair}>
-      <Button type="submit" variant="ghost">
+      <Button type="submit" variant="outline" className="w-full">
         <LogOut aria-hidden />
         Sair
       </Button>
