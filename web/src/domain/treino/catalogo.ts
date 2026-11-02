@@ -1,18 +1,4 @@
 import { chaveDeBusca, palavrasDoTermo } from "../texto/chave-de-busca";
-import { normalizarNome } from "../texto/nome";
-
-/**
- * O exercício com esse nome, pelo mesmo critério do índice único do banco
- * (sem diferenciar maiúsculas e espaços; acento diferencia).
- */
-export function encontrarPorNome<T extends { name: string }>(
-  lista: readonly T[],
-  nome: string,
-): T | undefined {
-  const alvo = normalizarNome(nome).toLowerCase();
-  if (!alvo) return undefined;
-  return lista.find((item) => normalizarNome(item.name).toLowerCase() === alvo);
-}
 
 const ordemAlfabetica = new Intl.Collator("pt-BR", { sensitivity: "base" });
 

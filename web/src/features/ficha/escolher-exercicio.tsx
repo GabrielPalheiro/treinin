@@ -4,8 +4,8 @@ import { Plus } from "lucide-react";
 import { useId, useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { normalizarNome } from "@/domain/texto/nome";
-import { buscarExercicios, encontrarPorNome } from "@/domain/treino/catalogo";
+import { encontrarPorNome, normalizarNome } from "@/domain/texto/nome";
+import { buscarExercicios } from "@/domain/treino/catalogo";
 import { criarExercicio } from "./acoes-exercicios";
 import type { Exercise } from "./consultas";
 

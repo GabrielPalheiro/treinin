@@ -204,7 +204,8 @@ diferenciar acento nem maiúscula. Ordem: mais usados primeiro (contados nos 100
 recentes), depois os que começam com o termo, depois alfabética. Sem termo, só os já usados.
 
 **Copiar refeição.** Copia os `MealEntry` de uma refeição de outro dia para a data atual, já
-recalculados, para o usuário só ajustar as gramas.
+recalculados, para o usuário só ajustar as gramas. É sempre a mesma refeição (almoço → almoço),
+só oferecida quando a refeição de destino está vazia, e sugere o dia anterior ao da tela.
 
 ---
 

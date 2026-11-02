@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { buscarAlimentos } from "@/domain/dieta/alimentos";
+import { encontrarPorNome } from "@/domain/texto/nome";
 import type { ResultadoDaAcao } from "@/lib/resultado-da-acao";
 import type { Alimento } from "./consultas";
 import { EditorDeGramas } from "./editor-de-gramas";
@@ -80,7 +81,7 @@ export function AdicionarAlimento({ alimentos, usos, rotuloDaRefeicao, registrar
       ) : (
         termo.trim() !== "" && <p className="px-1 text-sm text-muted-foreground">Nenhum alimento encontrado.</p>
       )}
-      {termo.trim() !== "" && (
+      {termo.trim() !== "" && !encontrarPorNome(alimentos, termo) && (
         <Button asChild variant="link" className="justify-start whitespace-normal text-left">
           <Link href={`/dieta/alimentos?nome=${encodeURIComponent(termo.trim())}`}>
             <Plus aria-hidden />
